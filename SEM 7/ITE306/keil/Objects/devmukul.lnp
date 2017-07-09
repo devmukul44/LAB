@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\ascii.obj" 
+TO ".\Objects\devmukul" 
+PRINT(".\Listings\devmukul.m51")

@@ -1,0 +1,4 @@
+MOV A,#10H
+MOV B,#10H
+DIV A,B
+END

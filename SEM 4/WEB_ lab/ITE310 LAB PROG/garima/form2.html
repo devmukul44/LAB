@@ -1,0 +1,41 @@
+<html>
+<head>
+<script src="jquery-1.6.2.min.js"></script>
+<script src="jquery-ui-1.8.15.custom.min.js"></script>
+<link rel="stylesheet" href="jquery/jqueryCalendar.css">
+<script>
+                jQuery(function() {
+                                jQuery( "inf_field_Publication date" ).datepicker();
+                });
+                </script>
+</head>
+<body>
+<form action="tender" method="post">
+Tender Id:<input type="text" name="Tender Id"> &nbsp &nbsp &nbsp &nbsp 
+Tender Description:<input type="text" name="Tender Description"><br>
+<br>
+Mode of Tender:
+<select>
+  <option value="open">Open</option>
+  <option value="limit">Limit</option>
+  <option value="eoi">EOI</option>
+  <option value="auction">Auction</option>
+  <option value="single">Single</option>
+  <option value="testing">Testing</option>
+</select><br><br>
+Publication date:
+&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp Last date:<br><br>
+Bidding type:
+<select>
+  <option value="one bidding system">One Bidding System</option>
+  <option value="two bidding system">Two Bidding System</option>
+</select><br>
+<br>
+<br>
+&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp <input type="submit" name="Submit" value="Save">
+</form>
+</body>
+</html>
+  
+
+

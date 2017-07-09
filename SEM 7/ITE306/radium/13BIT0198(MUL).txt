@@ -1,0 +1,4 @@
+MOV A,#AH
+MOV B,#AH
+MUL AB
+END

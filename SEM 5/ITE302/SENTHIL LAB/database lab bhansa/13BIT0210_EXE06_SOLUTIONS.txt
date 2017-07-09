@@ -1,0 +1,108 @@
+Customer(cid, cname, address, phone)
+Account(acno, actype, balance, branch)
+Branch(bno, bname, address, phone)
+Depositor(cid, acno)
+ ===================================================
+
+create table customernew 
+(
+ custid char(5),
+ cname varchar(5),
+ address varchar(5),
+ phone number(10)
+);
+
+insert into customernew values(
+'c1111', 'vivek', 'jawa', 8989895623);
+create table accountnew (
+accno char(5),
+actype varchar(10),
+balance number(10),
+branch varchar(10)
+);
+insert into accountnew values(
+'c1111', 'savings', 11000, 'chaupati');
+
+create table branch(
+bno char(5),
+bname varchar(10),
+address varchar(20),
+phone number(10)
+);
+
+insert into branch values(
+'c6541', 'chaupati', 'ashok nagar', 8989897414);
+
+
+create table depositor(
+custid char(5),
+accno char(5),
+foreign key(custid) references customernew(custid),
+foreign key(accno) references accountnew(accno)
+);
+
+insert into depositor values (
+'c1111', 'c1111');
+
+
+
+a) Find all the customer names whose account balance is more than 10000.
+
+code;
+SQL> select cname from customernew, accountnew where customernew.custid = accountnew.accno and accountnew.balance > 10000;
+
+b) Find the branch details of the customers with balance 10000 and more
+
+SQL> select bno, bname, address, phone from branch, accountnew where accountnew.
+branch = branch.bname and balance > 10000;
+
+BNO   BNAME      ADDRESS                   PHONE
+----- ---------- -------------------- ----------
+c6541 chaupati   ashok nagar          8989897414
+
+
+c) What is the branch address of customer C101.
+
+SQL> select address from accountnew, branch where accountnew.branch = branch.bna
+me and accno = 'c1111';
+
+ADDRESS
+--------------------
+ashok nagar
+
+SQL> select address from accountnew, branch where accountnew.branch = branch.bna
+me and accno = 'c1112';
+
+ADDRESS
+--------------------
+ashok gram
+
+
+d) Find all the customer names and addresses of customers whose balance is in the range of 10000 and 30000
+
+SQL> select cname, customernew.address from customernew, accountnew where custom
+ernew.custid = accountnew.accno and balance > 10000;
+
+CNAME ADDRE
+----- -----
+vivek jawa
+
+SQL> select cname, customernew.address from customernew, accountnew where custom
+ernew.custid = accountnew.accno and balance >= 10000;
+
+CNAME ADDRE
+----- -----
+vivek jawa
+kumar lawa
+
+
+e) What is the branch address of customer whose phone is 9098976857.
+
+SQL> select branch.address from customernew, accountnew, branch where custid = a
+ccno and accountnew.branch = branch.bname and customernew.phone=8989895623;
+
+ADDRESS
+--------------------
+ashok nagar
+
+

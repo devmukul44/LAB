@@ -1,0 +1,14 @@
+//max of 10 nos
+MOV DPTR,#1000H
+MOV R0,#0AH
+MOV B,#00H
+LOOP:
+     MOVX A,@DPTR
+	 CJNE A,B,LB
+	 LB:
+	 JC LBA
+	 MOV B,A
+LBA:
+     INC DPTR
+	 DJNZ R0,LOOP
+	 END

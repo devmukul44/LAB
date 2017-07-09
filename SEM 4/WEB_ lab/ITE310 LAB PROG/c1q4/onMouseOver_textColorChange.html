@@ -1,0 +1,40 @@
+<html>
+<head>
+	<title>onMouseOver!
+	</title>
+	<link rel="stylesheet" type="text/css" href="onMouseOver_textColorChange.css">
+
+</head>
+<body>
+<p id="para" onMouseOver="foreColorChange();">
+this is the text whose color foreground will change on mouse hovering over!
+</p>
+<p id="para1" onMouseOver="backColorChange();">
+this is the text whose background color will change on mouse hovering over!
+</p>
+<div id="d" onMouseOver="bodyBackground();"onMouseOut="bodyBackground1();">
+<p>
+this is the text whose text size will decrease on mouse hovering over!
+</p>
+</div>
+	
+	<script type="text/javascript">
+	function foreColorChange()
+	{
+	document.getElementById("para").style.color="red";
+	}
+	function backColorChange()
+	{
+	document.getElementById("para1").style.background="green";
+	}
+	function bodyBackground()
+	{
+	document.body.style.background="yellow";
+	}
+	function bodyBackground1()
+	{
+	document.body.style.background="transparent";
+	}
+	</script>
+</body>
+</html>

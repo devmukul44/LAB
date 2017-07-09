@@ -1,0 +1,65 @@
+13BIT0210
+RAMANUJ SHARMA
+
+                                             EXERCISE-5
+Account(acno, actype, balance, branch)
+
+create table account(acno number(10) not null, actype varchar(15) not null, balance number(20) not null,branch varchar(20));
+
+insert into account values(& acno, & actype, &balance , & branch);
+
+1. Find the total balance
+select sum(balance) from account ;
+
+2. Find the average balance.
+select avg(balance) from account;
+
+3. Find the total balance of ‘Vellore’ branch.
+select sum(balance) from account where branch = 'vel';
+
+4. Find the total balances of ‘Chennai’ and ‘Vellore’ branches
+select branch,sum(balance) from account where branch = 'vel' or branch = 'chennai' group by branch ;
+
+5. Find the branch and average balance of all branches and display them branchwise.
+select branch,avg(balance) from account group by branch ;
+
+6. Find the branch and average balance of all branches except Hyderabad branch.
+select branch,avg(balance) from account where branch <> 'hyderabad' group by branch ;
+
+7. Find the number of unique customers
+select count(balance) from account ;
+
+8. Find the minimum balance value and display the result column heading as ‘Min_Balance’.
+select min(balance) min_balance from account;
+
+9. Find the maximum balance value and display the result column heading as ‘Max_Balance’.
+select max(balance)  max_balance from account ;
+
+10. Find the total balance of all branches except ‘Coimbatore’ branch
+select branch,sum(balance) from account where branch <> 'coimbatore' group by branch ;
+
+11. Find the total balance of account with account type ‘Savings’.
+select sum(balance) from account where actype = 'savings';
+
+12. Find the branch and total balance of all branches and display them branchwise only for ‘Savings’ accounts.
+select branch,sum(balance) from account where actype = 'savings' group by branch;
+
+13. Sort on customer_name attribute and display all the records of customer table.
+select * from customer order by cust_name desc;
+
+14. Sort the table customer on customer_name and cid attribute
+select * from customer order by cust_name,cust_id desc;
+
+15. Sort the table account on actype and acno attributes and display them on descending order of acno.
+select * from account order by actype,acno desc;
+
+
+
+
+
+
+
+
+
+
+

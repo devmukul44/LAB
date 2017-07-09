@@ -1,0 +1,127 @@
+RAMANUJ SHARMA
+13BIT0210
+
+Date, Character, Conversion and Numeric Functions [Refer dbms_lab_manual.pdf – page 9 and 10 in your login page]
+
+Read the following functions in the given manual. Then do the following exercise;
+ADD_MONTHS, LAST_DAY, MONTHS_BETWEEN, NEXT_DAY, GREATEST
+ABS, CEIL, FLOOR, POWER, MOD, ROUND
+LOWER, UPPER, SUBSTRING, LPAD, RPAD, LENGTH, ||
+TO_CHAR, TO_DATE, TO_NUMBER
+
+Example:
+	SELECT 4+4 FROM DUAL;/////////////////////////////////////////////////
+	SELECT LENGTH(name) FROM STUDENT;
+
+Create the following tables with all the necessary constraints and answer the questions in SQL.
+
+Customer(cid, cname, address, phone, dob)
+Account(acno, actype, balance, branch, ac_start_date, customerid)
+
+CODE:
+
+create table customer(
+ccid char(5) primary key check(ccid like 'ck__'),
+cname varchar(10),
+address varchar(15),
+phone number(10),
+dob date
+);
+
+create table account(
+acno char(5) primary key,
+actype varchar(10),
+balance number(6),
+branch varchar(10),
+ac_date date,
+ccid char(5),
+foreign key(ccid) references customer(ccid)
+);
+
+
+
+insert into customer values(
+'ck01', 'vijay', 'vit', 9071, '06-mar-2016');
+insert into customer values(
+'ck02', 'kamal', 'ntui', 9072, '06-jan-2016');
+insert into customer values(
+'ck03', 'durgesh', 'mit', 9073, '06-apr-2016');
+insert into customer values(
+'ck04', 'haval', 'rit', 9074, '06-feb-2016');
+
+
+insert into account values(
+'ac101', 'saving', 900, 'sbi', '7-mar-2009', 'ck01');
+insert into account values(
+'ac102', 'current', 1900, 'sbi', '7-apr-2009', 'ck01');
+insert into account values(
+'ac103', 'saving', 3900, 'hdfc', '7-jan-2009', 'ck03');
+insert into account values(
+'ac104', 'current', 4900, 'icici', '7-may-2009', 'ck04');
+
+UPDATE  < tablename>  SET <col1>= < new value> , <col2> = < new  value> WHERE  <conditions>; 
+update customer set dob='12-mar-2001' where ccid='ck01';
+update customer set dob='12-mar-2004' where ccid='ck02';
+update customer set dob='12-mar-2005' where ccid='ck03';
+update customer set dob='12-mar-2007' where ccid='ck04';
+
+
+a) Find the age of all customers.
+select round(months_between(sysdate, dob)/12) from customer;
+SQL> select round(months_between(sysdate, dob)/12) from customer;//////////////////////////////////////////////////////////////////////
+
+TRUNC(MONTHS_BETWEEN(SYSDATE,DOB)/12)
+-------------------------------------
+                                   15
+                                   12
+                                   11
+                                    9
+
+b) Find the age of customer whose balance is greater than 10000.
+update account set balance=11000 where acno='ac101';
+select round(months_between(sysdate, dob)/12) from customer, account where customer.ccid = account.ccid and 
+balance > 10000;
+
+c) Find the length of customer whose id is ‘C101’
+select length(cname) from customer where ccid='ck01';
+SQL> select length(cname) from customer where ccid='ck01';
+
+LENGTH(CNAME)
+-------------
+            5
+
+d) Display all the customer names and addresses of customers in uppercase.
+select upper(cname), upper(address) from customer;
+SQL> select upper(cname), upper(address) from customer;
+
+UPPER(CNAM UPPER(ADDRESS)
+---------- ---------------
+VIJAY      VIT
+KAMAL      NTUI
+DURGESH    MIT
+HAVAL      RIT
+
+e) Find the customer details whose name is ‘Arvind’. [use UPPER or LOWER functions]
+select upper(cname), lower(address), upper(ccid), lower(dob) from customer where cname='vijay';
+
+UPPER(CNAM LOWER(ADDRESS)  UPPE LOWER(DOB
+---------- --------------- ---- ---------
+VIJAY      vit             CK01 12-mar-01
+
+f) Display ‘Mr.’ with all the customer names.
+select lpad(cname, length(cname)+3, 'Mr.') from customer;
+
+SQL> select lpad(cname, length(cname)+3, 'Mr.') from customer;
+
+LPAD(CNAME,LENGTH(CNAME)+3,'MR.')
+---------------------------------------------------------------
+Mr.vijay
+Mr.kamal
+Mr.durgesh
+Mr.haval
+
+g) Add a special character ‘$’ at the end of every customer’s names.
+
+select rpad(cname, length(cname)+1, '$') from customer;
+
+

@@ -1,0 +1,164 @@
+Vehicle (Reg_No, Vehicle_Name, Model_Year, Manufacturer, No_of_Wheels, Owner)
+-	Number of wheels column cannot be empty.
+-	Manufacturer attribute should contain unique values
+-	Owner attribute refers Owner table.
+Owner (Owner_ID, OName, Door_no, Street, Pincode, Phone)
+-	Owner_ID must start with ‘O’ and can be exactly 4 characters long.
+-	Pincode refers Pin table
+Manufacturer (MID, MName, Company_Location, Total_no_of_vehicles_produced, Estd_year)
+-	All the attributes should be Not Null
+-	Established year should not be less than 1900.
+Pin (Pincode, Area_Name, City, State, Country)
+-	Country can be India, Pakistan, Srilanka, Nepal, Bangladesh, and Burma
+-	All the attributes should be Not Null.
+Tables:
+
+create table vehicleo(
+regno char(5) primary key,
+vehicleName varchar(15),
+modelYear number(4),
+numwheel number(3) not null,
+mid char(4),
+owid char(4) check(owid like 'o%'),
+foreign key(mid) references manufacturer(mid),
+foreign key(owid) references owner(owid)
+);
+
+insert into vehicleo values('r101', 'amaze', 2001, 5, 'm101', 'o101');
+
+create table owner (
+owid char(4) primary key check(owid like 'o___'),
+oname varchar(10) not null,
+doornum number(4) not null,
+street varchar(10) not null,
+pincode number(5),
+phone number(5),
+foreign key(pincode) references pin(pincode)
+);
+
+insert into owner values('o101', 'kamal', 39, 'kala', 56561, 89891);
+
+create table manufacturer(
+mid char(4) primary key,
+mname varchar(10) not null,
+companyloc varchar(10) not null,
+numvehicle number(3) not null, 
+estdYear number(4) check(estdYear > 1900)
+);
+
+insert into manufacturer values('m101', 'honda', 'japan', 50, 1991);
+
+create table pin(
+pincode number(5) primary key,
+aname varchar(10) not null,
+city varchar(10) not null,
+state varchar(15) not null,
+country varchar(15) check(country in ('india', 'pakistan', 'nepal', 'burma'))
+);
+
+insert into pin values(56561, 'lala', 'jaora', 'mp', 'india');
+
+
+Insert few records in each of the above tables. 
+
+1.	Find the vehicle details of ‘Rahul Dravid’
+SQL> select regno, vehiclename, modelyear, numwheel, vehicleo.mid from vehicleo,
+owner where vehicleo.owid = owner.owid and oname = 'kamal';
+
+REGNO VEHICLENAME      MODELYEAR   NUMWHEEL MID
+----- --------------- ---------- ---------- ----
+r101  amaze                 2001          5 m101
+
+
+2.	Find the manufacturer details of ‘Swift’
+SQL> select manufacturer.mid, mname, companyloc, numvehicle, estdyear from vehic
+leo, manufacturer where manufacturer.mid=vehicleo.mid and vehicleo.vehiclename =
+ 'swift';
+
+MID  MNAME      COMPANYLOC NUMVEHICLE   ESTDYEAR
+---- ---------- ---------- ---------- ----------
+m102 hero       india              80       1901
+
+error at 
+SQL> select mid, mname, companyloc, numvehicle, estdyear from vehicleo, manufact
+urer where manufacturer.mid=vehicleo.mid and vehicleo.vehiclename = 'swift';
+select mid, mname, companyloc, numvehicle, estdyear from vehicleo, manufacturer
+where manufacturer.mid=vehicleo.mid and vehicleo.vehiclename = 'swift'
+       *
+ERROR at line 1:
+ORA-00918: column ambiguously defined
+
+
+3.	Find the register number and name of all vehicles owned by an owner with phone number 9898909097.
+SQL> select regno, vehiclename from vehicleo,owner where vehicleo.owid = owner.o
+wid and phone = 89892;
+
+REGNO VEHICLENAME
+----- ---------------
+r102  swift
+
+
+4.	Find the owner name, door number, street, city, state and country of all the owners.
+SQL> select oname, doornum, street, city, state, country from owner, pin where o
+wner.pincode = pin.pincode;
+
+ONAME         DOORNUM STREET     CITY       STATE           COUNTRY
+---------- ---------- ---------- ---------- --------------- ---------------
+kamal              39 kala       jaora      mp              india
+vimal              49 jala       ratlam     mp              india
+
+
+5.	Find the total number of vehicles produced by the manufacturer of the vehicle with register number ‘TN23AC2020’.
+SQL> select numvehicle from vehicleo, manufacturer where vehicleo.mid = manufact
+urer.mid and regno = 'r101';
+
+NUMVEHICLE
+----------
+        50
+
+
+6.	Find the owner name, vehicle name and manufacturer name of all vehicles.
+SQL> select oname, vehiclename, mname from owner, manufacturer, vehicleo where v
+ehicleo.mid = manufacturer.mid and vehicleo.owid = owner.owid;
+
+ONAME      VEHICLENAME     MNAME
+---------- --------------- ----------
+kamal      amaze           honda
+vimal      swift           hero
+
+
+7.	Find the number of vehicles owned by ‘Dhoni’. [Note: use aggregate function also]
+SQL> select count(*) from owner, vehicleo where vehicleo.owid= owner.owid and oname = 'vimal';
+
+  COUNT(*)
+----------
+         1
+
+
+8.	Find all the vehicles that are produced by a manufacturer during or after the year 2010.
+SQL> select vehiclename, regno, mname from manufacturer, vehicleo where manufact
+urer.mid = vehicleo.mid and modelyear >= 2001;
+
+VEHICLENAME     REGNO MNAME
+--------------- ----- ----------
+amaze           r101  honda
+swift           r102  hero
+
+
+9.	How many vehicle owners are there in Vellore?
+SQL> select count(*) from owner, pin where owner.pincode=pin.pincode and (city='jaora' or city='ratlam');
+
+
+  COUNT(*)
+----------
+         2
+
+
+10.	Find the vehicle number and vehicle name of all vehicles with more than 4 wheels and owned by ‘Raman’ and ‘Selvakumar’
+SQL> select regno, vehiclename from vehicleo, owner where vehicleo.owid = owner.
+owid and (oname = 'vimal' or oname='kamal') and numwheel > 4;
+
+REGNO VEHICLENAME
+----- ---------------
+r101  amaze
+r102  swift 

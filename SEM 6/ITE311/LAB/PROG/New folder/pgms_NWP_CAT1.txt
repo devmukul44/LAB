@@ -1,0 +1,346 @@
+========================================================================
+CYCLE 1
+1.
+import java.net.*;
+
+class One
+{
+	public static void main(String[] args) throws Exception
+	{
+		InetAddress ia = InetAddress.getByName("www.vit.ac.in");
+		System.out.println(ia);
+	}
+}
+2.
+import java.net.*;
+
+class Two
+{
+	public static void main(String[] args) throws Exception
+	{
+		InetAddress[] ia = InetAddress.getAllByName("www.microsoft.com");
+		for(InetAddress i:ia)
+		{
+			System.out.println(i);
+		}
+	}
+}
+3.
+import java.net.*;
+
+class Three
+{
+	public static void main(String[] args) throws Exception
+	{
+		InetAddress ia = InetAddress.getLocalHost();
+		System.out.println(ia);
+	}
+}
+4.
+import java.net.*;
+
+class Four
+{
+	public static void main(String[] args) throws Exception
+	{
+		InetAddress ia = InetAddress.getByName("106.10.138.240");
+		System.out.println(ia.getHostName());
+	}
+}
+5.
+import java.net.*;
+
+class Five
+{
+	public static void main(String[] args) throws Exception
+	{
+		InetAddress ia = InetAddress.getByName("127.0.0.1");
+		System.out.println(ia.isLoopbackAddress());
+	}
+}
+6.
+import java.net.*;
+
+class Six
+{
+	public static void main(String[] args) throws Exception
+	{
+		InetAddress ia = InetAddress.getByName("127.0.0.1");
+		System.out.println(ia.isReachable(10000));
+	}
+}
+7.
+
+import java.net.*;
+import java.util.*;
+
+class seven{
+
+    public static void main(String[] args) throws Exception
+    {
+	Scanner sc=new Scanner(System.in);
+
+    String a=sc.next();
+        
+    InetAddress i=InetAddress.getByName(a);
+ byte[] add=i.getAddress();
+    if (add.length == 4)
+System.out.println("IPV4");
+  else
+if
+(add.length == 16)
+System.out.println("IPV6");
+
+}
+}
+
+8.
+import java.net.*;
+import java.util.*;
+
+class Eight
+{
+	public static void main(String[] args) throws Exception
+	{
+		Enumeration e = NetworkInterface.getNetworkInterfaces();
+		while(e.hasMoreElements())
+		{
+			NetworkInterface i = (NetworkInterface)e.nextElement();
+			System.out.println(i);
+		}
+	}
+}
+9.
+import java.net.*;
+import java.io.*;
+
+class Ten
+{
+	public static void main(String[] args) throws Exception
+	{
+		URL u = new URL("https://academics.vit.ac.in/");
+		//HttpUrlConnection conn = (HttpUrlConnection)u.getConnection();
+		BufferedReader br = new BufferedReader(new InputStreamReader(u.openStream()));
+		String p = "";
+		File f=new File("abc.html");
+		FileWriter fw=new FileWriter(f);
+		while((p=br.readLine()) != null)
+		{
+			//System.out.println(p);
+			fw.write(p);
+		}
+	}
+}
+
+10.
+import java.net.*;
+import java.io.*;
+
+class Ten
+{
+	public static void main(String[] args) throws Exception
+	{
+		URL u = new URL("http://www.google.com");
+		//HttpUrlConnection conn = (HttpUrlConnection)u.getConnection();
+		BufferedReader br = new BufferedReader(new InputStreamReader(u.openStream()));
+		String p = "";
+		while((p=br.readLine()) != null)
+		{
+			System.out.println(p);
+		}
+	}
+}
+
+11.
+import java.net.*;
+
+class Eleven
+{
+	public static void main(String[] args) throws Exception
+	{
+		System.out.println(URLEncoder.encode("www.vit.ac.in/search?query=13BIT0106"));
+		System.out.println(URLDecoder.decode("www.vit.ac.in%2Fsearch%3Fquery%3D13BIT0106"));
+	}
+}
+
+12.
+import java.net.*;
+
+class Twelve
+{
+	public static void main(String[] args) throws Exception
+	{
+		URI absolute = new URI("http://www.example.com/");
+		URI relative = new URI("images/logo.png");
+		System.out.println(absolute.resolve(relative));
+	}
+}
+
+13.
+import java.net.*;
+
+class Thirteen
+{
+	public static void main(String[] args) throws Exception
+	{
+		SocketAddress s = new InetSocketAddress("proxy.example.com",80);
+		Proxy p = new Proxy(Proxy.Type.SOCKS,s);
+		System.out.println(p);
+	}
+}
+
+17.
+Server Thread
+import java.net.*;
+import java.io.*;
+
+class ServerThread extends Thread
+{
+	Socket c;
+
+	public ServerThread(Socket c)
+	{
+		this.c = c;
+	}
+
+	public void run()
+	{
+		try
+		{
+			DataOutputStream dos = new DataOutputStream(c.getOutputStream());
+			dos.writeBytes("Connected to server");
+			c.close();
+		}
+		catch(Exception e){}
+	}
+}
+
+Server-
+import java.net.*;
+
+class SeventeenServer
+{
+	public static void main(String[] args) throws Exception
+	{
+		ServerSocket s = new ServerSocket(9999);
+		while(true)
+		{
+			Socket c = s.accept();			
+			ServerThread st = new ServerThread(c);
+			st.start();
+		}
+	}
+}
+
+Client-
+import java.net.*;
+import java.io.*;
+
+class SeventeenClient
+{
+	public static void main(String[] args) throws Exception
+	{
+		Socket s = new Socket("localhost",9999);
+		BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream()));
+		DataOutputStream dos = new DataOutputStream(s.getOutputStream());
+		String p = "";
+		while((p=br.readLine())!=null)
+		{
+			System.out.println(p);
+		}
+	}
+}
+
+==========================================================================
+CYCLE 2
+
+
+1.
+import java.net.*;
+import java.io.*;
+class LowPortScanner {
+public static void main(String[] args) {
+	String host = args.length > 0 ? args[0] : "localhost";
+	for (int i = 1; i < 1024; i++) {
+	try {
+	Socket s = new Socket(host, i);
+	System.out.println("There is a server on port " + i + " of "+ host);
+	s.close();
+	} catch (UnknownHostException ex) {
+	System.err.println(ex);
+	break;
+	}
+	catch (IOException ex) {
+		// must not be a server on this port	
+	}
+}
+}
+}
+
+
+
+2.
+Server-
+import java.net.*; 
+import java.io.*; 
+public class Server 
+{ 
+	public static void main(String[] args) throws Exception 
+	{ 
+		ServerSocket ss = new ServerSocket(8888); 
+		ss.accept(); 
+	} 
+} 
+
+Client-
+import java.net.*; 
+import java.io.*; 
+public class TwoCTwo 
+{ 
+	public static void main(String[] args) throws Exception 
+	{ 
+		Socket s = new Socket("sjtg18site64",8888); 
+	        System.out.println("Channel: "+s.getChannel()); 
+	        System.out.println("InetAddress: "+s.getInetAddress()); 
+	        System.out.println("Keep-Alive: "+s.getKeepAlive()); 
+	        System.out.println("Local-Address: "+s.getLocalAddress()); 
+	        System.out.println("Local-Port: "+s.getLocalPort()); 
+	        System.out.println("Port: "+s.getPort());  
+	} 
+} 
+
+3.	Implement a code to retrieve socket information from a host using an Echo Client.
+Program:
+Server-
+import java.net.*; 
+import java.io.*; 
+public class Server2 
+{ 
+	public static void main(String[] args) throws Exception 
+	{ 
+		ServerSocket ss = new ServerSocket(9999); 
+		Socket s = ss.accept(); 
+		DataOutputStream dos = new DataOutputStream(s.getOutputStream()); 
+		dos.writeBytes("Channel: "+ss.getChannel()+"\n"); 
+	        dos.writeBytes("InetAddress: "+ss.getInetAddress()+"\n"); 
+	        dos.writeBytes("Local-Socket-Address: "+s.getLocalSocketAddress()+"\n"); 
+	        dos.writeBytes("Local-Port: "+s.getLocalPort()+"\n"); 
+	} 
+} 
+
+Client-
+import java.net.*; 
+import java.io.*; 
+public class ThreeCTwo 
+{ 
+	public static void main(String[] args) throws Exception 
+	{ 
+		Socket s = new Socket("sjtg18site59",9999); 
+	        BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream())); 
+		String p="";		 
+		while((p=br.readLine()) != null) 
+		{ 
+			System.out.println(p); 
+		} 
+	} 
+

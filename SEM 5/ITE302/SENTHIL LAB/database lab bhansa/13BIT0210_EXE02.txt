@@ -1,0 +1,204 @@
+13BIT0210
+RAMANUJ SHARMA
+29/1/2016
+
+EXCERCISE 2. Create the following tables with appropriate data types, sizes, and relevant constraints; [Primary key attributes are underlined].
+
+1.Sales_Person(SID, Sales_Person_Name, Area_Name, Phone, Salary)
+-	SID values must start with the letter ‘S’
+-	Salary should be in the range of 20000 to 75000
+-	Phone should be unique value
+
+CODE;
+
+CREATE TABLE Sales_Person (
+Sid CHAR(5) PRIMARY KEY CHECK(Sid like('S%')),
+Sales_person VARCHAR(15) ,
+Area_name VARCHAR(15) ,
+Phone NUMBER(10) UNIQUE,
+Salary NUMBER(10) CHECK(Salary>=20000 AND Salary<=75000) );
+
+INSERT INTO Sales_Person VALUES('S1211', 'Flip', 'Gt road', 9042356471, 25000);
+INSERT INTO Sales_Person VALUES('S1212', 'Flop', 'Rt road', 9042356472, 55000);
+INSERT INTO Sales_Person VALUES('S1213', 'Wate', 'Xt road', 9042356473, 65000);
+INSERT INTO Sales_Person VALUES('S1214', 'Xat', 'Mt road', 9042356474, 75000);
+INSERT INTO Sales_Person VALUES('S1215', 'Amber', 'Aate road', 9042356475, 35000);
+
+OUTPUT;
+
+SQL> CREATE TABLE Sales_Person (
+  2  Sid CHAR(5) CHECK(Sid like('S%')),
+  3  Sales_person VARCHAR(15) ,
+  4  Area_name VARCHAR(15) ,
+  5  Phone NUMBER(10) UNIQUE,
+  6  Salary NUMBER(10) CHECK(Salary>=20000 AND Salary<=75000) );
+
+Table created.
+
+SQL> INSERT INTO Sales_Person VALUES('S1211', 'Flip', 'Gt road', 9042356471, 250
+00);
+
+1 row created.
+
+SQL> SELECT * FROM Sales_Person
+  2  ;
+
+SID   SALES_PERSON    AREA_NAME            PHONE     SALARY
+----- --------------- --------------- ---------- ----------
+S1211 Flip            Gt road         9042356471      25000
+S1212 Flop            Rt road         9042356472      55000
+S1213 Wate            Xt road         9042356473      65000
+S1214 Xat             Mt road         9042356474      75000
+S1215 Amber           Aate road       9042356475      35000
+
+SQL> DESC Sales_Person;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- --------------------------
+
+ SID                                                CHAR(5)
+ SALES_PERSON                                       VARCHAR2(15)
+ AREA_NAME                                          VARCHAR2(15)
+ PHONE                                              NUMBER(10)
+ SALARY                                             NUMBER(10)
+
+SQL> INSERT INTO Sales_Person VALUES('a1215', 'Amber', 'Aate road', 9042356475,
+35000);
+INSERT INTO Sales_Person VALUES('a1215', 'Amber', 'Aate road', 9042356475, 35000
+)
+*
+ERROR at line 1:
+ORA-02290: check constraint (13BIT0210.SYS_C00203060) violated
+
+
+
+
+
+ 	
+
+
+2.University(UID, University_Name, Established_Year, No_of_Students, Address)
+-	UID value must start with the letter ‘U’
+-	Established year cannot be less than 1950
+-	Only the universities with at least 10000 students can be stored.
+-	Address must have a value.
+
+CODE;
+
+CREATE TABLE University (
+Uid_univ CHAR(5) PRIMARY KEY CHECK(Uid_univ like('U%')),
+Univ_name VARCHAR(15),
+Estb_year NUMBER(4) CHECK(Estb_year >=1950), 
+No_of_students NUMBER(5) CHECK(No_of_students >=10000),
+Address VARCHAR(15) NOT NULL );
+
+INSERT INTO University VALUES('U3421', 'UC@Berkley', 1951, 10000, 'California');
+INSERT INTO University VALUES('U3422', 'UIIT', 1951, 10000, 'California');
+INSERT INTO University VALUES('U3423', 'UNIT, 1951, 10000, 'California');
+INSERT INTO University VALUES('U3424', 'UMIT', 1951, 10000, 'Ca');
+INSERT INTO University VALUES('U3425', 'UCT', 1951, 10000, 'BHOPAL');
+
+
+3.Vehicle (VID, Vehicle_Name, Model_Year, Manufacturer, No_of_Wheels)
+-	VID must start with the letter ‘V’ and can be 5 characters long.
+-	Number of wheels column cannot be empty.
+-	Manufacturer attribute should contain unique values
+
+CODE;
+CREATE TABLE Vehicle (
+Vid CHAR(5) PRIMARY KEY CHECK(Vid like('V%')),
+Vehicle_name VARCHAR(10) ,
+Model_year NUMBER(4),
+Manufacturer VARCHAR(10) UNIQUE,
+No_of_wheels NUMBER(2) NOT NULL );
+
+INSERT INTO Vehicle VALUES(
+'V6161', 'MOTOR BIKE', 1999, 'HERO', 2);
+INSERT INTO Vehicle VALUES(
+'V6162', 'CAR', 1984, 'MARUTI', 5);
+INSERT INTO Vehicle VALUES(
+'V6163', 'BOAT', 1980, 'HONDA', 0);
+INSERT INTO Vehicle VALUES(
+'V6164', 'SUV', 1999, 'MAHINDRA', 5);
+INSERT INTO Vehicle VALUES(
+'V6165', 'CYCLE', 1999, 'RENAULT', 2);
+
+
+4.Cricket_Player(ID, Player_Name, DOB, Skills, Country_Name, Marital_Status)
+-	Skills can be ‘Bowler’, ‘Batsman’, ‘Wicket Keeper’, or ‘All rounder’
+-	Marital status can be ‘Married’ or ‘Single’
+
+CODE;
+CREATE TABLE Cric_player (
+Cid CHAR(5) PRIMARY KEY, 
+Player_name VARCHAR(10),
+Dob_pl DATE,
+Skills VARCHAR(15) CHECK(Skills IN('Bowler', 'Batsman', 'Wicket keeper', 'All rounder')),
+Country_n VARCHAR(15),
+Mar_status VARCHAR(7) CHECK(Mar_status IN('Married', 'Single')) 
+);
+
+INSERT INTO Cric_player VALUES(
+'c1231', 'rahul', '5-12-1990', 'Batsman', 'india', 'Married');
+INSERT INTO Cric_player VALUES(
+'c1232', 'virat', '5-11-1990', 'Batsman', 'india', 'Single');
+INSERT INTO Cric_player VALUES(
+'c1233', 'kumble', '5-4-1990', 'Bowler', 'india', 'Married');
+INSERT INTO Cric_player VALUES(
+'c1234', 'vijay', '5-10-1990', 'Bowler', 'india', 'Married');
+INSERT INTO Cric_player VALUES(
+'c1235', 'ganguly', '5-1-1990', 'Batsman', 'india', 'Married');
+
+
+5.Actor (Actor_No, Actor_Name, Gender, Roles_Played, No_of_movies, Movie_Languages)
+-	Actor number must start with ‘A’ and must be of length 5 characters
+-	Movie_Languages can be one of ‘Tamil’, ‘Hindi’, ‘Telugu’, ‘Malayalam’ and ‘English’
+-	Number of movies acted can not exceed 1500
+-	Roles played can be ‘Hero’, ‘Heroine’, ‘Special appearance’, ‘Cameo’, ‘Guest role’, or  ‘Supporting’
+
+CODE;
+CREATE TABLE Actor (
+Act_no CHAR(5) PRIMARY KEY CHECK(Act_no like('A____')),
+Act_name VARCHAR(10),
+Gender CHAR(1),
+Roles VARCHAR (15) CHECK(Roles IN ('Hero', 'Heroine', 'Special appearance', 'Cameo', 'Guest role', 'Supporting')),
+Movies_no NUMBER(4) CHECK(Movies_no <= 1500),
+Movies_lang VARCHAR(10) CHECK(Movies_lang IN ('Tamil', 'Hindi', 'Telgu', 'Malayalam', 'English))
+);
+
+
+INSERT INTO Actor VALUES(
+'A3451', 'RAJNI', 'M', 'Hero', '1500', 'Hindi');
+INSERT INTO Actor VALUES(
+'A3452', 'Amitabh', 'M', 'Hero', '1000', 'Hindi');
+INSERT INTO Actor VALUES(
+'A3453', 'Salman', 'M', 'Hero', '1324', 'Hindi');
+INSERT INTO Actor VALUES(
+'A3454', 'Akshay', 'M', 'Hero', '1123', 'Hindi');
+INSERT INTO Actor VALUES(
+'A3455', 'Sushant', 'M', 'Hero', '15', 'Hindi');
+
+
+6.Furniture (FNo, FName, FType, Quantity, Date_of_Manufacture, Manufacturer)
+-	FNo must start with the letter ‘F’ (Ex. ‘F101’)
+-	Manufacturer are ‘Damro’, ‘Godrej’, ‘KGT’
+
+CODE;
+CREATE TABLE Furniture (
+F_no CHAR(5) PRIMARY KEY CHECK(F_no like 'F%'), 
+Fname VARCHAR(14), 
+Ftype VARCHAR(10),
+Quantity NUMBER(5),
+Domanufac DATE,
+Manufacturer VARCHAR(7) CHECK(Manufacturer IN ('Damro', 'Godrej', 'KGT'))
+);
+
+INSERT INTO Furniture VALUES (
+'F0561', 'HONDA', 'OLD', 50, '3-12-1998', 'Damro');
+INSERT INTO Furniture VALUES (
+'F0562', 'Hero', 'OLD', 59, '3-1-1998', 'Damro');
+INSERT INTO Furniture VALUES (
+'F0563', 'Hyundai', 'OLD', 90, '3-2-1998', 'Godrej');
+INSERT INTO Furniture VALUES (
+'F0564', 'Hayate', 'OLD', 97, '3-5-1998', 'KGT');
+INSERT INTO Furniture VALUES (
+'F0565', 'Hercules', 'OLD', 60, '3-11-1998', 'Damro');

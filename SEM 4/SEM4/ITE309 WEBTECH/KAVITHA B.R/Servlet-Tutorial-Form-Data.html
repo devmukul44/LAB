@@ -1,0 +1,344 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE>Servlet Tutorial: Handling Form Data</TITLE>
+
+<META NAME="author" CONTENT="Marty Hall -- hall@apl.jhu.edu">
+<META NAME="keywords"
+      CONTENT="Servlet,servlet,Servlets,servlets,JSP,jsp,Tutorial,tutorial,Learning,learning,java,server,pages,CGI,cgi">
+<META NAME="description"
+      CONTENT="Servlet Tutorial: Handling form data.">
+<LINK REL=STYLESHEET
+      HREF="Servlet-Tutorial-Styles.css"
+      TYPE="text/css">
+</HEAD>
+
+<BODY>
+
+<CENTER>
+<TABLE BORDER=5 BGCOLOR="#EF8429">
+  <TR><TH CLASS="TITLE">
+      Handling Form Data</TABLE>
+</CENTER>
+
+<HR>
+<TABLE><TR>
+<TD>
+<OL>
+<LI><A HREF="#Section1">Introduction</A>
+<LI><A HREF="#Section2">Example: Reading Three Parameters</A>
+</OL>
+
+<TD>
+<OL START=3>
+<LI><A HREF="#Section3">Example: Listing All Form Data</A>
+<LI><A HREF="index.html" TARGET="_top">Servlet and JSP Tutorial: Top</A>
+</OL>
+</TABLE>
+<HR>
+
+<H2><A NAME="Section1">1. Introduction</A></H2>
+If you've ever used a Web search engine, visited an on-line bookstore,
+tracked stocks on-line, or asked a Web-based site for quotes on plane tickets,
+you've probably seen funny looking URLs like
+<CODE>http://host/path?user=Marty+Hall&amp;origin=bwi&amp;dest=lax</CODE>.
+The part after the question mark 
+(i.e. <CODE>user=Marty+Hall&amp;origin=bwi&amp;dest=lax</CODE>)
+is known as <I>form data</I>, and is the most common way
+to get data from a Web page to a server-side program. It can be
+attached to the end of the URL after a question mark (as above), for
+<CODE>GET</CODE> requests, or sent to the server on a separate line, for 
+<CODE>POST</CODE> requests.
+<P>
+Extracting the needed information from this form data is traditionally
+one of the most tedious parts of CGI programming. First of all,
+you have to read the data one way for <CODE>GET</CODE> requests (in traditional CGI,
+this is usually via the <CODE>QUERY_STRING</CODE> environment variable),
+and another way for <CODE>POST</CODE> requests (usually by reading the
+standard input). Second, you have to chop the pairs at the ampersands,
+then separate the parameter names (left of the equals signs) from
+the parameter values (right of the equals signs). Third, you have to
+URL-decode the values. Alphanumeric characters get sent unchanged, but
+spaces get converted to plus signs and other characters get converted
+to <CODE>%XX</CODE> where<CODE> </CODE>XX is the ASCII (or ISO Latin-1) 
+value of the character, in hex. For example, if someone entered a value of 
+"<CODE>~hall, ~gates, and ~mcnealy</CODE>" into a 
+textfield with the name "<CODE>users</CODE>" in an HTML form, the data would get sent
+as "<CODE>users=%7Ehall%2C+%7Egates%2C+and+%7Emcnealy</CODE>". Finally, the fourth
+reason that parsing form data is tedious is that values can be omitted
+(e.g. <CODE>param1=val1&amp;param2=&amp;param3=val3</CODE>) and a parameter
+can have more than one value in that the same parameter
+can appear more than once (e.g. <CODE>param1=val1&amp;param2=val2&amp;param1=val3</CODE>).
+<P>
+One of the nice features of Java servlets is that all of this form parsing
+is handled automatically. You simply call the <CODE>getParameter</CODE> method of
+the <CODE>HttpServletRequest</CODE>, supplying the parameter name as an argument.
+Note that parameter names are case sensitive.
+You do this exactly the same way when the data is sent via 
+<CODE>GET</CODE> as you do when it is sent via <CODE>POST</CODE>.
+The return value is a <CODE>String</CODE> corresponding to the uudecoded value of
+the first occurrence of that parameter name. An empty <CODE>String</CODE> 
+is returned if the parameter exists but has no value, and
+<CODE>null</CODE> is returned if there was no such parameter. If the
+parameter could potentially have more than one value, as in the example
+above, you should call <CODE>getParameterValues</CODE> instead of 
+<CODE>getParameter</CODE>. This returns an array of strings.
+Finally, although in real applications your servlets probably have a specific
+set of parameter names they are looking for, for debugging purposes it
+is sometimes useful to get a full list. Use <CODE>getParameterNames</CODE> for this,
+which returns an <CODE>Enumeration</CODE>, each entry of which can be cast to a
+<CODE>String</CODE> and used in a <CODE>getParameter</CODE> call.
+
+<H2><A NAME="Section2">2. Example: Reading Three Parameters</A></H2>
+Here's a simple example that reads parameters named <CODE>param1</CODE>, <CODE>param2</CODE>,
+and <CODE>param3</CODE>, listing their values in a bulleted list. Note that,
+although you are required to specify response settings (content type,
+status line, other HTTP headings) before beginning to generate the
+content, there is no requirement that you read the request parameters
+at any particular time.
+<P>
+Also note you can easily make servlets that can handle both <CODE>GET</CODE> 
+and <CODE>POST</CODE> data, simply by having
+its <CODE>doPost</CODE> method call <CODE>doGet</CODE> or by overriding <CODE>service</CODE> 
+(which calls <CODE>doGet</CODE>, <CODE>doPost</CODE>, <CODE>doHead</CODE>, etc.). 
+This is good standard practice, since it
+requires very little extra work and permits flexibility on the part of the 
+client. If you're used to the traditional CGI approach where you read 
+<CODE>POST</CODE> data via the standard input, you should note that there is a similar
+way with servlets by first calling <CODE>getReader</CODE> or <CODE>getInputStream</CODE>
+on the <CODE>HttpServletRequest</CODE>. This is a bad idea for regular parameters,
+but might be of use for uploaded files or <CODE>POST</CODE> data being sent by
+custom clients rather than via HTML forms. Note, however, that if you read
+the <CODE>POST</CODE> data in that manner, it might no longer be found 
+by <CODE>getParameter</CODE>.
+
+<H3>2.1 ThreeParams.java</H3>
+You can also 
+<A HREF="hall/ThreeParams.java">download the source</A> or 
+<A HREF="http://webdev.apl.jhu.edu/servlet/hall.ThreeParams?param1=%7Ehall&param2=%7Egates&param3=%7Emcnealy">
+try it on-line</A>. Note: also uses 
+<A HREF="hall/ServletUtilities.java">ServletUtilities.java</A>,
+shown earlier.
+
+<PRE>
+package hall;
+
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.util.*;
+
+public class ThreeParams extends HttpServlet {
+  public void doGet(HttpServletRequest request,
+                    HttpServletResponse response)
+      throws ServletException, IOException {
+    response.setContentType("text/html");
+    PrintWriter out = response.getWriter();
+    String title = "Reading Three Request Parameters";
+    out.println(ServletUtilities.headWithTitle(title) +
+                "&lt;BODY&gt;\n" +
+                "&lt;H1 ALIGN=CENTER&gt;" + title + "&lt;/H1&gt;\n" +
+                "&lt;UL&gt;\n" +
+                "  &lt;LI&gt;param1: "
+                + <B>request.getParameter("param1")</B> + "\n" +
+                "  &lt;LI&gt;param2: "
+                + <B>request.getParameter("param2")</B> + "\n" +
+                "  &lt;LI&gt;param3: "
+                + <B>request.getParameter("param3")</B> + "\n" +
+                "&lt;/UL&gt;\n" +
+                "&lt;/BODY&gt;&lt;/HTML&gt;");
+  }
+
+  <B>public void doPost(HttpServletRequest request,
+                     HttpServletResponse response)
+      throws ServletException, IOException {
+    doGet(request, response);
+  }</B>
+}
+</PRE>
+<H3>2.2 ThreeParams Output</H3>
+<CENTER>
+<IMG SRC="hall/ThreeParams-IE.gif" WIDTH=811 HEIGHT=300
+     ALT="Servlet Reading Three Parameters">
+</CENTER>
+
+<H2><A NAME="Section3">3. Example: Listing All Form Data</A></H2>
+Here's an example that looks up <I>all</I> the parameter names that were
+sent and puts them in a table. It highlights parameters that have zero
+values as well as ones that have multiple values. First, it looks
+up all the parameter names via the <CODE>getParameterNames</CODE>
+method of <CODE>HttpServletRequest</CODE>. This returns an <CODE>Enumeration</CODE>.
+Next, it loops down the <CODE>Enumeration</CODE> in the standard
+manner, using <CODE>hasMoreElements</CODE> to determine when to stop
+and using <CODE>nextElement</CODE> to get each entry. Since <CODE>nextElement</CODE>
+returns an <CODE>Object</CODE>, it casts the result to a <CODE>String</CODE> and passes
+that to <CODE>getParameterValues</CODE>, yielding an array of
+<CODE>String</CODE>s. If that array is one entry long and contains only
+an empty string, then the parameter had no values, and the
+servlet generates an italicized "No Value" entry.
+If the array is more than one entry long, then the parameter
+had multiple values, and they are displayed in a bulleted
+list. Otherwise the one main value is just placed into the
+table.
+
+<H3>3.1 ShowParameters.java</H3>
+You can also 
+<A HREF="hall/ShowParameters.java">download the source</A> or 
+<A HREF="http://webdev.apl.jhu.edu/servlet/hall.ShowParameters?ceo=%7Ehall&assistant1=%7Egates&assistant2=%7Emcnealy">
+try it on-line</A>. Note: also uses 
+<A HREF="hall/ServletUtilities.java">ServletUtilities.java</A>,
+shown earlier.
+<PRE>
+package hall;
+
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.util.*;
+
+/** Shows all the parameters sent to the servlet via either
+ *  GET or POST. Specially marks parameters that have no values or
+ *  multiple values.
+ *  <P>
+ *  Part of tutorial on servlets and JSP that appears at
+ *  http://www.apl.jhu.edu/~hall/java/Servlet-Tutorial/
+ *  1999 Marty Hall; may be freely used or adapted.
+ */
+
+public class ShowParameters extends HttpServlet {
+  public void doGet(HttpServletRequest request,
+                    HttpServletResponse response)
+      throws ServletException, IOException {
+    response.setContentType("text/html");
+    PrintWriter out = response.getWriter();
+    String title = "Reading All Request Parameters";
+    out.println(ServletUtilities.headWithTitle(title) +
+                "&lt;BODY BGCOLOR=\"#FDF5E6\"&gt;\n" +
+                "&lt;H1 ALIGN=CENTER&gt;" + title + "&lt;/H1&gt;\n" +
+                "&lt;TABLE BORDER=1 ALIGN=CENTER&gt;\n" +
+                "&lt;TR BGCOLOR=\"#FFAD00\"&gt;\n" +
+                "&lt;TH&gt;Parameter Name&lt;TH&gt;Parameter Value(s)");
+    <B>Enumeration paramNames = request.getParameterNames();</B>
+    while(paramNames.hasMoreElements()) {
+      String paramName = (String)paramNames.nextElement();
+      out.println("&lt;TR&gt;&lt;TD&gt;" + paramName + "\n&lt;TD&gt;");
+      <B>String[] paramValues = request.getParameterValues(paramName);</B>
+      if (paramValues.length == 1) {
+        String paramValue = paramValues[0];
+        if (paramValue.length() == 0)
+          out.print("&lt;I&gt;No Value&lt;/I&gt;");
+        else
+          out.print(paramValue);
+      } else {
+        out.println("&lt;UL&gt;");
+        for(int i=0; i&lt;paramValues.length; i++) {
+          out.println("&lt;LI&gt;" + paramValues[i]);
+        }
+        out.println("&lt;/UL&gt;");
+      }
+    }
+    out.println("&lt;/TABLE&gt;\n&lt;/BODY&gt;&lt;/HTML&gt;");
+  }
+
+  public void doPost(HttpServletRequest request,
+                     HttpServletResponse response)
+      throws ServletException, IOException {
+    doGet(request, response);
+  }
+}
+</PRE>
+
+<H3>3.2 Front End to ShowParameters</H3>
+Here's an HTML form that sends a number of parameters to this servlet.
+Right click on the 
+<A HREF="http://webdev.apl.jhu.edu/~hall/servlets/PostForm.html">
+source code link</A> to download the HTML. Left click on the 
+link to try it out on-line.
+It uses <CODE>POST</CODE> to send the data (as should <I>all</I> forms that have
+<CODE>PASSWORD</CODE> entries), demonstrating the value of having servlets
+include both a <CODE>doGet</CODE> and a <CODE>doPost</CODE>. However, just for
+the sake of illustration, a 
+<A HREF="http://webdev.apl.jhu.edu/~hall/servlets/GetForm.html">version using GET</A>
+can also be downloaded or tried out on-line.
+
+<H3>PostForm.html</H3>
+<PRE>
+&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"&gt;
+&lt;HTML&gt;
+&lt;HEAD&gt;
+  &lt;TITLE&gt;A Sample FORM using POST&lt;/TITLE&gt;
+&lt;/HEAD&gt;
+
+&lt;BODY BGCOLOR="#FDF5E6"&gt;
+&lt;H1 ALIGN="CENTER"&gt;A Sample FORM using POST&lt;/H1&gt;
+
+&lt;FORM ACTION="/servlet/hall.ShowParameters"
+      METHOD="POST"&gt;
+  Item Number:
+  &lt;INPUT TYPE="TEXT" NAME="itemNum"&gt;&lt;BR&gt;
+  Quantity:
+  &lt;INPUT TYPE="TEXT" NAME="quantity"&gt;&lt;BR&gt;
+  Price Each:
+  &lt;INPUT TYPE="TEXT" NAME="price" VALUE="$"&gt;&lt;BR&gt;
+  &lt;HR&gt;
+  First Name:
+  &lt;INPUT TYPE="TEXT" NAME="firstName"&gt;&lt;BR&gt;
+  Last Name:
+  &lt;INPUT TYPE="TEXT" NAME="lastName"&gt;&lt;BR&gt;
+  Middle Initial:
+  &lt;INPUT TYPE="TEXT" NAME="initial"&gt;&lt;BR&gt;
+  Shipping Address:
+  &lt;TEXTAREA NAME="address" ROWS=3 COLS=40&gt;&lt;/TEXTAREA&gt;&lt;BR&gt;
+  Credit Card:&lt;BR&gt;
+  &nbsp;&nbsp;&lt;INPUT TYPE="RADIO" NAME="cardType"
+                     VALUE="Visa"&gt;Visa&lt;BR&gt;
+  &nbsp;&nbsp;&lt;INPUT TYPE="RADIO" NAME="cardType"
+                     VALUE="Master Card"&gt;Master Card&lt;BR&gt;
+  &nbsp;&nbsp;&lt;INPUT TYPE="RADIO" NAME="cardType"
+                     VALUE="Amex"&gt;American Express&lt;BR&gt;
+  &nbsp;&nbsp;&lt;INPUT TYPE="RADIO" NAME="cardType"
+                     VALUE="Discover"&gt;Discover&lt;BR&gt;
+  &nbsp;&nbsp;&lt;INPUT TYPE="RADIO" NAME="cardType"
+                     VALUE="Java SmartCard"&gt;Java SmartCard&lt;BR&gt;
+  Credit Card Number:
+  &lt;INPUT TYPE="PASSWORD" NAME="cardNum"&gt;&lt;BR&gt;
+  Repeat Credit Card Number:
+  &lt;INPUT TYPE="PASSWORD" NAME="cardNum"&gt;&lt;BR&gt;&lt;BR&gt;
+  &lt;CENTER&gt;
+    &lt;INPUT TYPE="SUBMIT" VALUE="Submit Order"&gt;
+  &lt;/CENTER&gt;
+&lt;/FORM&gt;
+
+&lt;/BODY&gt;
+&lt;/HTML&gt;
+</PRE>
+
+<CENTER>
+<IMG SRC="hall/ShowParameters-Initial-NS.gif" WIDTH=596 HEIGHT=777
+     ALT="Front End to ShowParameters Servlet">
+</CENTER>
+
+<H3>3.3 Submission Result</H3>
+<CENTER>
+<IMG SRC="hall/ShowParameters-Result-NS.gif" WIDTH=596 HEIGHT=581
+     ALT="Result of Sending Data to ShowParameters">
+</CENTER>
+
+<P>
+<HR>
+This page is part of my
+<A HREF="http://www.apl.jhu.edu/~hall/java/Servlet-Tutorial/" TARGET="_top">
+Tutorial on Servlets and JSP</A>. &copy; 1999 
+<A HREF="http://www.apl.jhu.edu/~hall/" TARGET="_top">Marty Hall</A>. All
+source code freely available for unrestricted use. Created for for
+work in the <A HREF="http://www.jhuapl.edu/rc/" TARGET="_top">Research
+and Technology Development Center</A> of the <A
+HREF="http://www.jhuapl.edu/" TARGET="_top">Johns Hopkins University
+Applied Physics Lab</A>, for courses in the Johns Hopkins <A
+HREF="http://www.jhu.edu/~wse1/partime/" TARGET="_top">Part-Time MS
+Program in Computer Science</A>, and for various industry seminars and
+<A HREF="http://www.apl.jhu.edu/~hall/java/Short-Courses.html"
+TARGET="_top">on-site Java short courses</A>.
+
+</BODY>
+</HTML>

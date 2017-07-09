@@ -1,0 +1,28 @@
+<html>
+<head>
+	<title>
+	digital clock!
+	</title>
+	
+	<script type=text/javascript>
+	function clock()
+	{
+	var myDate=new Date();
+	document.f.h.value=myDate.getHours();
+	document.f.m.value=myDate.getMinutes();
+	document.f.s.value=myDate.getSeconds();
+	
+	setTimeout("clock()",1000);
+	}
+	</script>
+</head>
+<body onLoad="clock();">
+<h3>digital clock!
+</h3>
+	<form name="f">
+	<input type="text" name="h" size="5">
+	<input type="text" name="m" size="5">
+	<input type="text" name="s" size="5">
+	</form>
+</body>
+</html>

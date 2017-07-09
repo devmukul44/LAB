@@ -1,0 +1,4 @@
+MOV A,#02H
+MOV B,#03H
+ADD A,B
+END

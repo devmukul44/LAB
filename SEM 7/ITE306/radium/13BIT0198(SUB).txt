@@ -1,0 +1,4 @@
+MOV A,#20H
+MOV B,#10H
+SUBB A,B
+END

@@ -1,0 +1,88 @@
+<html>
+<head>
+<script type="text/javascript">
+function validateForm() {
+    var x = document.forms["myForm"]["fname"].value;
+    if (x == null || x == "") {
+        alert("Name must be filled out");
+        return false;
+    }
+}
+</script>
+<style>
+#header {
+    background-color:#eeeeee:;
+    color:white;
+    text-align:center;
+    padding:5px;
+}
+#nav {
+    line-height:30px;
+    background-color:#eeeeee;
+    height:1000px;
+    width:200px;
+    float:left;
+    padding:7px; 
+}
+#section {
+    width:350px;
+    float:left;
+    padding:10px; 
+}
+#footer {
+    background-color:black;
+    color:white;
+    clear:both;
+    text-align:center;
+    padding:5px; 
+}
+</style>
+</head>
+<body bgcolor="white">
+<pre>
+<div id="header">	
+<img src="nhpc.jpg" height="100px" width="800px">
+</div>
+<div id="nav">
+Contractor Master<br>
+Tender Master<br>
+</div>
+<div id="section">
+<form action="contractor.php" method="post" onsubmit="return validateForm()">
+
+<hr>
+Contractor ID:<input type="text" name="Contractor ID"> <br>
+
+Contractor Name:<input type="text" name="Contractor Name"><br>
+
+Pan No:<input type="text" name="Pan No"><br>
+
+Address:<input type="text" name="Address"><br>
+
+Bank Details: <br>
+
+&nbsp &nbsp &nbsp &nbsp A/c No:<input type="text" name="A/c No"><br>
+
+&nbsp &nbsp &nbsp &nbsp Name of Bank:<input type="text" name="Name of Bank"><br>
+
+&nbsp &nbsp &nbsp &nbsp City:<input type="text" name="City"><br>
+
+&nbsp &nbsp &nbsp &nbsp IFSC Code:<input type="text" name="IFSC Code"><br>
+
+&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp <input type="submit" name="Submit" value="Save">
+</form>
+</div>
+<div id="footer">
+Copyright © 2012 NHPC Ltd. All Rights Reserved.
+</div>
+																									
+
+
+</pre>
+</body>
+</html>
+
+
+
+
+

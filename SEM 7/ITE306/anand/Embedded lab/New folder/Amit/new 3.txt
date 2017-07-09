@@ -1,0 +1,206 @@
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
+import javax.imageio.ImageIO;
+public class encoder
+{
+  
+    public static void main(String[] args)
+    {
+     try
+     {
+        BufferedImage br = ImageIO.read(new File("test.jpg"));
+        BufferedImage br1 = br;
+        BufferedImage br2 = br;
+        BufferedImage br3 = br;
+        BufferedImage br4 = br;
+     
+
+     Scanner sc= new Scanner(System.in);
+     String t;
+     char c[];
+     System.out.println("please enter the string to be decoded");
+     t=sc.nextLine();
+     c = t.toCharArray();
+     int i;
+     int b[]= new int[c.length];
+     for(i=0;i<c.length;i++)
+     {
+       
+       b[i]=c[i];
+         System.out.println(b[i]);
+ 
+     }
+     int[][] f=new int[t.length()][8];
+     for(i=0;i<t.length();i++)
+     {
+         int temp=b[i];
+         for(int j=7;j>=0;j--)
+         {
+             f[i][j] = temp%2;
+             temp=temp/2;
+             
+         }
+     }
+     for(i=0;i<t.length();i++)
+     {
+         for(int j=0;j<8;j++)
+         {
+             System.out.print(f[i][j]);
+         }
+         System.out.println(" ");
+     }
+     int[][] xor0={{0,0,0,1},{0,0,1,0},{0,1,0,0},{0,1,1,1},{1,0,0,0},{1,0,1,1},{1,1,0,1},{1,1,1,0}};
+     int[][] xor1={{0,0,0,0},{0,0,1,1},{0,1,0,1},{0,1,1,0},{1,0,0,1},{1,0,1,0},{1,1,0,0},{1,1,1,1}};
+     int[][] img1=new int[t.length()][8];
+     int[][] img2=new int[t.length()][8];
+     int[][] img3=new int[t.length()][8];
+     int[][] img4=new int[t.length()][8];
+     for(i=0;i<t.length();i++)
+     {
+         for(int j=0;j<8;j++)
+         {
+             if(f[i][j]==0)
+             {
+                int r =(int)(Math.random()*8);
+                img1[i][j]=xor0[r][0];
+                img2[i][j]=xor0[r][1];
+                img3[i][j]=xor0[r][2];
+                img4[i][j]=xor0[r][3];
+             }
+             else if(f[i][j]==1)
+             {
+                int r =(int)(Math.random()*8);
+                img1[i][j]=xor1[r][0];
+                img2[i][j]=xor1[r][1];
+                img3[i][j]=xor1[r][2];
+                img4[i][j]=xor1[r][3];
+             }
+
+         }
+     }
+     System.out.println("image 1");
+     for(i=0;i<t.length();i++)
+     {
+         for(int j=0;j<8;j++)
+         {
+             System.out.print(img1[i][j]);
+         }
+         System.out.println(" ");
+     }
+     System.out.println("image 2");
+     for(i=0;i<t.length();i++)
+     {
+         for(int j=0;j<8;j++)
+         {
+             System.out.print(img2[i][j]);
+         }
+         System.out.println(" ");
+     }
+     System.out.println("image 3");
+     for(i=0;i<t.length();i++)
+     {
+         for(int j=0;j<8;j++)
+         {
+             System.out.print(img3[i][j]);
+         }
+         System.out.println(" ");
+     }
+     System.out.println("image 4");
+     for(i=0;i<t.length();i++)
+     {
+         for(int j=0;j<8;j++)
+         {
+             System.out.print(img4[i][j]);
+         }
+     System.out.println(" ");
+     }
+     int y,x,w,l;
+     w=br.getWidth();
+     l=br.getHeight();
+     for(i=0;i<t.length()*20;i=i+20)
+     {
+         for(int j=0;j<160;j=j+20)
+         {
+             int r1 =(int)(Math.random()*20)+i;
+             int r2 =(int)(Math.random()*20)+j;
+             int rgb = br1.getRGB(r1, r2);
+             if(img1[i/20][j/20]==1)
+             {
+             br1.setRGB(r1, r2,rgb+3);
+             }
+             else
+             {
+             br1.setRGB(r1, r2, rgb-3);
+             }
+         }
+     }
+     File f1 = new File("MyFile1.jpg");
+     ImageIO.write(br1, "JPEG", f1);
+     for(i=0;i<t.length()*20;i=i+20)
+     {
+         for(int j=0;j<160;j=j+20)
+         {
+             int r1 =(int)(Math.random()*20)+i;
+             int r2 =(int)(Math.random()*20)+j;
+             int rgb = br2.getRGB(r1, r2);
+             if(img2[i/20][j/20]==1)
+             {
+             br2.setRGB(r1, r2,rgb+3);
+             }
+             else
+             {
+             br2.setRGB(r1, r2, rgb-3);
+             }
+         }
+     }
+          File f2 = new File("MyFile2.jpg");
+     ImageIO.write(br2, "JPEG", f2);
+     for(i=0;i<t.length()*20;i=i+20)
+     {
+         for(int j=0;j<160;j=j+20)
+         {
+             int r1 =(int)(Math.random()*20)+i;
+             int r2 =(int)(Math.random()*20)+j;
+             int rgb = br3.getRGB(r1, r2);
+             if(img3[i/20][j/20]==1)
+             {
+             br3.setRGB(r1, r2,rgb+3);
+             }
+             else
+             {
+             br3.setRGB(r1, r2, rgb-3);
+             }
+         }
+     }
+       File f3 = new File("test3.jpg");
+     ImageIO.write(br3, "JPEG", f3);
+     for(i=0;i<t.length()*20;i=i+20)
+     {
+         for(int j=0;j<160;j=j+20)
+         {
+             int r1 =(int)(Math.random()*20)+i;
+             int r2 =(int)(Math.random()*20)+j;
+             int rgb = br4.getRGB(r1, r2);
+             if(img4[i/20][j/20]==1)
+             {
+             br4.setRGB(r1, r2,rgb+3);
+             }
+             else
+             {
+             br4.setRGB(r1, r2, rgb-3);
+             }
+         }
+     }
+       File f4 = new File("MyFile4.jpg");
+     ImageIO.write(br4, "JPEG", f4);
+    }
+     catch(IOException ex)
+     {
+         System.out.println("htdhgdhgcchg");
+     }
+     
+     }
+
+}

@@ -1,0 +1,146 @@
+13BIT0210
+RAMANUJ SHARMA
+2/11/16
+
+EXERCISE - 3
+                    
+Create the following tables with appropriate data types, sizes, and relevant constraints; [Primary key attributes are underlined]. Use the CONSTRAINT and meaningful constraint names for all your constraints.
+
+
+1.Sales_Person(SID, Sales_Person_Name, Area_Name, Phone, Salary)
+-	SID values must start with the letter ‘S’
+-	Salary should be in the range of 20000 to 75000, and negative values must not be permitted.
+-	Phone should be unique value
+-	Sales_peson_name and Area_Name should be NOT NULL
+
+CODE;
+CREATE TABLE Sales_Person (
+SID CHAR(5) ,
+SP_Name VARCHAR(15) , 
+Area_Name VARCHAR(15),
+Phone NUMBER(10),
+Salary NUMBER(7), 
+CONSTRAINT CHK PRIMARY KEY(SID),
+CONSTRAINT S_CHK CHECK(SID like 'S%'),
+CONSTRAINT SL_CHK CHECK(Salary BETWEEN 20000 AND 75000),
+CONSTRAINT PH_CHK CHECK(Phone IS UNIQUE),
+CONSTRAINT SN_CHK CHECK(Salary IS NOTNULL),
+CONSTRAINT AREA_CHK CHECK(Area_Name IS NOTNULL)
+);
+
+INSERT INTO Sales_Person VALUES (
+'S4141', 'Code', 'Katpadi', 9067684531, 50000);
+INSERT INTO Sales_Person VALUES (
+'S4142', 'Mat', 'Vellore', 9067684532, 70000);
+INSERT INTO Sales_Person VALUES (
+'S4143', 'Zat', 'Jaora', 9067684533, 60000);
+INSERT INTO Sales_Person VALUES (
+'S4144', 'Ruff', 'Chennai', 9067684534, 300000);
+INSERT INTO Sales_Person VALUES (
+'S4145', 'Wamp', 'Bombay', 9067684535, 8000);
+
+
+2.University(UID, University_Name, Established_Year, No_of_Students, Address)
+-	UID value must start with the letter ‘U’ and can be exactly 4 characters long.
+-	Established year cannot be less than 1950, and should be NOT NULL
+-	Only the universities with at least 10000 students can be stored.
+-	Address must have a value.
+
+CODE;
+
+CREATE TABLE Universitys (
+Univ_id CHAR(5), 		//UID cannot be kept as an- 	Univ_name VARCHAR(15),		//identifier.
+Estbl_year NUMBER(5),
+Numb_students NUMBER(5),
+Univ_address VARCHAR(10),
+CONSTRAINT CHK PRIMARY KEY(Univ_id),
+CONSTRAINT UN_CHK CHECK(Univ_id like 'U%'),
+CONSTRAINT EST_CHK CHECK(Estbl_year > 1950),
+CONSTRAINT NO_CHK CHECK(Numb_students >= 10000),
+CONSTRAINT A_CHK CHECK(Univ_address IS NOTNULL)
+ );
+
+INSERT INTO Universitys VALUES (
+'U5151', 'VIT', 1993, 10000, 'Vellore');
+INSERT INTO Universitys VALUES (
+'U5152', 'IIT', 1980, 50000, 'Delhi');
+INSERT INTO Universitys VALUES (
+'U5153', 'NIT', 1990, 10000, 'Agra');
+INSERT INTO Universitys VALUES (
+'U5154', 'MIT', 1993, 80000, 'Jaipur');
+INSERT INTO Universitys VALUES (
+'U5155', 'RIT', 1993, 10056, 'Lucknow');
+
+
+3.Vehicle (VID, Vehicle_Name, Model_Year, Manufacturer, No_of_Wheels, Vehicle_Type)
+-	VID must start with the letter ‘V’ and can be 5 characters long.
+-	Number of wheels column cannot be empty.
+-	Permitted values for ‘number of wheels’ column are 2, 3, 4, 6, 8, 10, and 16.
+-	Manufacturer attribute should contain unique values
+-	Type can be ‘Two Wheeler’, ‘Auto’, ‘Car’, ‘Bus’, ‘Lorry’, and ‘Truck’
+
+CODE;
+CREATE TABLE Vehicle (
+Vid CHAR(5),
+Vehicle_name VARCHAR(10),
+Model_year NUMBER(4),
+Manufacturer VARCHAR(10),
+No_of_wheels NUMBER(2),
+Vehicle_type VARCHAR(10),
+CONSTRAINT CHK PRIMARY KEY(Vid),
+CONSTRAINT VE_CHK CHECK(Vid like('V%')),
+CONSTRAINT W_CHK CHECK(No_of_wheels IS NOTNULL),
+CONSTRAINT W_CHK CHECK(No_of_wheels IN (2, 3, 4, 6, 8, 10, 16)),
+CONSTRAINT MF_CHK CHECK(Manufacturer IS UNIQUE),
+CONSTRAINT VT_CHK CHECK(Vehicle_type IN ('Two Wheeler', 'Auto', 'Car', 'Bus', 'Lorry', 'Truck'))
+);
+
+
+INSERT INTO Vehicle VALUES(
+'V6161', 'MOTOR BIKE', 1999, 'HERO', 2, 'Two Wheeler');
+INSERT INTO Vehicle VALUES(
+'V6162', 'CAR', 1984, 'MARUTI', 6, 'Car');
+INSERT INTO Vehicle VALUES(
+'V6163', 'BOAT', 1980, 'HONDA', 3, 'Lorry');
+INSERT INTO Vehicle VALUES(
+'V6164', 'SUV', 1999, 'MAHINDRA', 6, 'Truck');
+INSERT INTO Vehicle VALUES(
+'V6165', 'CYCLE', 1999, 'RENAULT', 2, 'Auto');
+
+
+4.Actor (Actor_No, Actor_Name, Gender, Roles_Played, No_of_movies, Movie_Languages)
+-	Actor number must start with ‘A’ and must be of length 5 characters
+-	Movie_Languages can be one of ‘Tamil’, ‘Hindi’, ‘Telugu’, ‘Malayalam’ and ‘English’
+-	Number of movies acted cannot exceed 1500 and should be NOT NULL
+-	Roles played can be ‘Hero’, ‘Heroine’, ‘Special appearance’, ‘Cameo’, ‘Guest role’, or  ‘Supporting’
+-	Gender can be either ‘Male’ or ‘Female’ and should be NOT NULL.
+
+CODE;
+CREATE TABLE Actor(
+Act_no CHAR(5),
+Act_name VARCHAR(10),
+Gender CHAR(1),
+Roles VARCHAR(15),
+Movies_no NUMBER(4),
+Movies_lang VARCHAR(10),
+CONSTRAINT CHK PRIMARY KEY(Act_no),
+CONSTRAINT ACHK CHECK(Act_no like ('A____')),
+CONSTRAINT MLCHK CHECK(Movies_lang IN('Tamil', 'Hindi', 'Telgu', 'Malayalam', 'English')),
+CONSTRAINT MCHK CHECK(Movies_no < 1500),
+CONSTRAINT MECHK CHECK(Movies_no IS NOT NULL),
+CONSTRAINT RCHK CHECK(Roles IN('Hero','Heroine','Specialappearance','Cameo', 'Guest role', 'Supporting')),
+CONSTRAINT GCHK CHECK(Gender IN('M', 'F')),
+CONSTRAINT GECHK CHECK(Gender IS NOT NULL));
+
+INSERT INTO Actor VALUES(
+'A3451', 'RAJNI', 'M', 'Hero', '150', 'Hindi');
+INSERT INTO Actor VALUES(
+'A3452', 'Amitabh', 'M', 'Hero', '100', 'Hindi');
+INSERT INTO Actor VALUES(
+'A3453', 'Salman', 'M', 'Hero', '1324', 'Hindi');
+INSERT INTO Actor VALUES(
+'A3454', 'Akshay', 'M', 'Hero', '112', 'Hindi');
+INSERT INTO Actor VALUES(
+'A3455', 'Sushant', 'M', 'Hero', '15', 'Hindi');
+
+

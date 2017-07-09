@@ -1,0 +1,9 @@
+//sum of first 15 natural nos
+MOV R0,#0fH
+MOV A,R0
+INC R0
+MOV B,R0
+MUL AB
+MOV B,#02H
+DIV AB
+END

@@ -1,0 +1,8 @@
+//factorial
+MOV R0,#07H
+MOV A,#01H
+AGAIN:
+MOV B,R0
+MUL AB
+DJNZ R0,AGAIN
+END 

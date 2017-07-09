@@ -1,0 +1,5 @@
+MOV A,#08H
+MOV B,#01H
+CPL A
+ADD A,B
+END

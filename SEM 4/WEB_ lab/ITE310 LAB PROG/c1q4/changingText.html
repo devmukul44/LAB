@@ -1,0 +1,21 @@
+<html>
+<head>
+	<title>changing text!
+	</title>
+	
+	<script type="text/javascript">
+	var i=0;
+	function change()
+	{
+	var ch="changing text:";
+		
+	document.getElementById("para").innerHTML=ch+i;
+	i=i+1;
+	setInterval("change()",1000);
+	}
+	</script>
+</head>
+<body onLoad="change();">
+	<p id="para"></p>
+</body>
+</html>

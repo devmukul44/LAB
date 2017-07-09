@@ -1,0 +1,129 @@
+13BIT0210		
+RAMANUJ SHARMA	
+28/1/2016
+
+EXERCISE - 1:Create the following tables with appropriate data types and sizes. Insert 5 records in each of the above tables.
+
+1.Customer (Cust_id, Cust_name, Gender, DOB, Address, Phone)
+
+CODE:
+
+CREATE TABLE Customer (
+Cust_id CHAR(5) PRIMARY KEY, 
+Cust_name VARCHAR(10), 
+gender CHAR(1), 
+dob DATE, 
+address VARCHAR(15), 
+phone NUMBER(10) );
+
+INSERT INTO Customer VALUES (
+'A1211', 'One', 'm', '12-12-16', 'VIT', 9078564321 );
+INSERT INTO Customer VALUES (
+'A1212', 'Two', 'f', '1-1-16', 'VIT', 9078564322 );
+INSERT INTO Customer VALUES (
+'A1213', 'Three', 'm', '5-12-16', 'VIT', 9078564323 );
+INSERT INTO Customer VALUES (
+'A1214', 'Four', 'f', '3-9-16', 'VIT', 9078564324 );
+INSERT INTO Customer VALUES (
+'A1215', 'Five', 'f', '8-7-16', 'VIT', 9078564325 );
+
+SELECT * FROM Customer;
+
+
+2.Item (Item_id, Item_name, Price, Item_color, Quantity)
+
+CODE:
+
+CREATE TABLE Item (
+Item_id CHAR(5) PRIMARY KEY, 
+Item_name VARCHAR(15), 
+Price NUMBER(10),
+Item_color VARCHAR(10), 
+Quantity NUMBER(5) );
+
+INSERT INTO Item VALUES (
+'B3131', 'Table', 400, 'Wooden', 10);
+INSERT INTO Item VALUES (
+'B3132', 'Chair', 200, 'Wooden', 6);
+INSERT INTO Item VALUES (
+'B3133', 'Fan', 500, 'White', 04);
+INSERT INTO Item VALUES (
+'B3134', 'Bulb', 100, 'Yellow', 20);
+INSERT INTO Item VALUES (
+'B3135', 'Candle', 5, 'Yellow', 5);
+
+SELECT * FROM Item;
+
+
+3.Sales_Person(SID, Sales_Person_Name, Area_Name, Phone, Salary)
+
+CODE:
+
+CREATE TABLE Sales_Person (
+SID CHAR(5) PRIMARY KEY,
+SP_Name VARCHAR(15), 
+Area_Name VARCHAR(15),
+Phone NUMBER(10),
+Salary NUMBER(7) );
+
+INSERT INTO Sales_Person VALUES (
+'C4141', 'Code', 'Katpadi', 9067684531, 5000);
+INSERT INTO Sales_Person VALUES (
+'C4142', 'Mat', 'Vellore', 9067684532, 7000);
+INSERT INTO Sales_Person VALUES (
+'C4143', 'Zat', 'Jaora', 9067684533, 6000);
+INSERT INTO Sales_Person VALUES (
+'C4144', 'Ruff', 'Chennai', 9067684534, 3000);
+INSERT INTO Sales_Person VALUES (
+'C4145', 'Wamp', 'Bombay', 9067684535, 8000);
+
+SELECT * FROM Sales_Person;
+
+
+4.University(UID, University_Name, Established_Year, No_of_Students, Address)
+
+CODE:
+
+CREATE TABLE University (
+Univ_id CHAR(5) PRIMARY KEY, 		//UID cannot be kept as an- 	Univ_name VARCHAR(15),		//identifier.
+Estbl_year NUMBER(5),
+Numb_students NUMBER(5),
+Univ_address VARCHAR(10) );
+
+INSERT INTO Universitys VALUES (
+'D5151', 'VIT', 1993, 10000, 'Vellore');
+INSERT INTO Universitys VALUES (
+'D5152', 'IIT', 1980, 500, 'Delhi');
+INSERT INTO Universitys VALUES (
+'D5153', 'NIT', 1990, 1000, 'Agra');
+INSERT INTO Universitys VALUES (
+'D5154', 'MIT', 1993, 5000, 'Jaipur');
+INSERT INTO Universitys VALUES (
+'D5155', 'RIT', 1993, 100, 'Lucknow');
+
+SELECT * FROM Universitys;
+
+5.Vehicle (VID, Vehicle_Name, Model_Year, Manufacturer, No_of_Wheels)
+
+CODE:
+
+CREATE TABLE Vehicle (
+Vid CHAR(5) PRIMARY KEY,
+Vehicle_name VARCHAR(10),
+Model_year NUMBER(4),
+Manufacturer VARCHAR(10),
+No_of_wheels NUMBER(2) );
+
+INSERT INTO Vehicle VALUES(
+'E6161', 'MOTOR BIKE', 1999, 'HERO', 2);
+INSERT INTO Vehicle VALUES(
+'E6162', 'CAR', 1984, 'MARUTI', 5);
+INSERT INTO Vehicle VALUES(
+'E6163', 'BOAT', 1980, 'HONDA', 0);
+INSERT INTO Vehicle VALUES(
+'E6164', 'SUV', 1999, 'MAHINDRA', 5);
+INSERT INTO Vehicle VALUES(
+'E6165', 'CYCLE', 1999, 'HERO', 2);
+
+
+SELECT * FROM Vehicle;

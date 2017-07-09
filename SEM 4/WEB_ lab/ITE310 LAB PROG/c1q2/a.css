@@ -1,0 +1,25 @@
+body.a{
+background-color: lightgrey;
+}
+
+#b{
+font-weight: bold;
+font-family: Verdana;
+color: red;
+}
+
+.ab{
+font-family: Arial;
+color: black;
+font-size: 18px;
+}
+
+.aa{
+background-color:#808080;
+}
+
+table.a{
+background-color:#808080;
+height:15%;
+width:100%;
+}

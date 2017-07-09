@@ -1,0 +1,11 @@
+//move a data block from one memory to another
+MOV DPTR,#2000H
+MOV R0,#40H
+MOV B,#0AH
+AGAIN:
+      MOV A,@R0
+	  MOVX @DPTR,A
+	  INC DPTR
+	  INC R0
+	  DJNZ B,AGAIN
+	  END

@@ -1,0 +1,9 @@
+javac *.java
+
+rmic AdderRemote
+
+rmiregistry 5000
+
+java Server
+
+java Client

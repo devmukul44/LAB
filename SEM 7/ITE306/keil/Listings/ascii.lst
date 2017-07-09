@@ -1,0 +1,38 @@
+C51 COMPILER V9.56.0.0   ASCII                                                             11/10/2016 02:18:20 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE ASCII
+OBJECT MODULE PLACED IN .\Objects\ascii.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE ascii.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\asc
+                    -ii.lst) TABS(2) OBJECT(.\Objects\ascii.obj)
+
+line level    source
+
+   1          #include<stdio.h>
+   2          #include<regx51.h>
+   3          void delay(unsigned int x)
+   4          { 
+   5   1        unsigned int i,j;
+   6   1        for(i=0;i<x;i++)
+   7   1        for(j=0;j<120;j++){}
+   8   1      }
+   9          int main()
+  10          {
+  11   1        unsigned char x='a';
+  12   1        P2=(int)x;
+  13   1      }
+*** WARNING C290 IN LINE 13 OF ascii.c: missing return value
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     36    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)

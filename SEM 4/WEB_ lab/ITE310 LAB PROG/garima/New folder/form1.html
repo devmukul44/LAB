@@ -1,0 +1,158 @@
+<html>
+<head>
+<script type="text/javascript">
+function validate()
+{
+   if( document.f1.cid.value == "" )
+   {
+     alert( "Please provide contractor ID!" );
+     document.f1.cid.focus() ;
+	 
+     return false;
+   }
+   if( document.f1.cname.value == "" )
+   {
+     alert( "Please provide contractor name!" );
+     document.f1.cname.focus() ;
+	 
+     return false;
+   }
+   if( document.f1.pno.value == "" )
+   {
+     alert( "Please provide personal account number!" );
+     document.f1.pno.focus() ;
+	 
+     return false;
+   }
+   if( document.f1.pno.value.length < 10 )
+   {
+     alert( "Please provide valid personal account number" );
+     document.f1.pno.focus() ;
+	 
+     return false;
+   }
+   if( document.f1.address.value == "" )
+   {
+     alert( "Please provide address!" );
+     document.f1.address.focus() ;
+	 
+     return false;
+   }
+   if( document.f1.acno.value == "" )
+   {
+     alert( "Please provide valid account number!" );
+     document.f1.acno.focus() ;
+	 
+     return false;
+   }
+   if( document.f1.bankname.value == "" )
+   {
+     alert( "Please provide bank name!" );
+     document.f1.bankname.focus() ;
+	 
+     return false;
+   }
+    if( document.f1.city.value == "" )
+   {
+     alert( "Please provide city name!" );
+     document.f1.city.focus() ;
+	 
+     return false;
+   }
+    if( document.f1.ifsc.value == "" )
+   {
+     alert( "Please provide ifsc code!" );
+     document.f1.ifsc.focus() ;
+	 
+     return false;
+   }
+   if( document.f1.ifsc.value.length < 11 )
+   {
+     alert( "Please provide valid ifsc code" );
+     document.f1.ifsc.focus() ;
+	 
+     return false;
+   }
+}
+</script>
+<style>
+#header {
+    background-color:#eeeeee:;
+    color:white;
+    text-align:center;
+    padding:5px;
+}
+#nav {
+    line-height:30px;
+    background-color:#eeeeee;
+    height:1000px;
+    width:200px;
+    float:left;
+    padding:7px; 
+}
+#section {
+    width:350px;
+    float:left;
+    padding:10px; 
+}
+#footer {
+    background-color:black;
+    color:white;
+    clear:both;
+    text-align:center;
+    padding:5px; 
+}
+</style>
+</head>
+<body>
+<div id="header">	
+<img src="nhpc.jpg" height="100px" width="800px">
+</div>
+<div id="nav">
+<a href="form1.html">
+Contractor Master
+</a><br>
+<a href="form2.html">
+Tender Master
+</a><br>
+</div>
+<pre>
+<div id="section">
+<form name="f1" onsubmit="return (validate())" action="contractor.php" method="post">
+
+<hr>
+Contractor ID:<input type="text" name="cid"> <br>
+
+Contractor Name:<input type="text" name="cname"><br>
+
+Pan No:<input type="text" name="pno" placeholder="10 digits"><br>
+
+Address:<input type="text" name="address"><br>
+
+Bank Details: <br>
+
+&nbsp &nbsp &nbsp &nbsp A/c No:<input type="text" name="acno"><br>
+
+&nbsp &nbsp &nbsp &nbsp Name of Bank:<input type="text" name="bankname"><br>
+
+&nbsp &nbsp &nbsp &nbsp City:<input type="text" name="city"><br>
+
+&nbsp &nbsp &nbsp &nbsp IFSC Code:<input type="text" name="ifsc" placeholder="11 alpha numumerical"><br>
+
+&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp <input type="submit">
+</form>
+</div>
+<div id="footer">
+Copyright © 2012 NHPC Ltd. All Rights Reserved.
+</div>
+																									
+
+
+</pre>
+</body>
+</html>
+
+
+
+
+

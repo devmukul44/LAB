@@ -1,0 +1,79 @@
+1.)
+//without records
+
+ALTER TABLE Sales_person DROP COLUMN SID;
+
+ALTER TABLE Sales_person ADD (SID char(10) NOT NULL PRIMARY KEY);
+
+//with records
+
+ALTER TABLE Sales_person DROP COLUMN SID;
+
+ALTER TABLE Sales_person ADD (SID char(10) NOT NULL PRIMARY KEY);
+/* this gives ERROR saying that "table must be empty to add mandatory (NOT NULL) column" */
+
+2.)
+//without records
+ALTER TABLE Sales_person MODIFY (Sales_Person_name char(30) NOT NULL);
+table altered
+
+
+//with records
+ALTER TABLE Sales_person MODIFY (Sales_Person_name char(30) NOT NULL);
+table altered
+
+
+3.)
+//without records
+ALTER TABLE Sales_person MODIFY (Sales_Person_name char(5) NOT NULL);
+table altered
+
+//with records
+ALTER TABLE Sales_person MODIFY (Sales_Person_name char(5) NOT NULL);
+/* This gives error"cannot descrease column length because some calue is too big" */
+
+4.)
+ALTER TABLE Actor ADD CONSTRAINT gen_null CHECK(Gender is NULL);
+table altered
+
+5.)
+ALTER TABLE Actor MODIFY (Gender char(7) NULL);
+table altered
+
+6.)
+ALTER TABLE Actor DROP CONSTRAINT ROLES_CHK;
+Table altered 
+
+ALTER TABLE Actor ADD CONSTRAINT ROLES_CHK CHECK(Roles_Played='Villian');
+Table altered
+
+7.)
+ALTER TABLE Actor DROP CONSTRAINT lang_chk;
+Table altered
+ALTER TABLE Actor ADD CONSTRAINT lang_chk CHECK(Movie_Languages='Tamil' OR Movie_Languages='Hindi' OR Movie_Languages='Telgu' OR Movie_Languages='Malyalam' OR Movie_Languages='English' OR Movie_Languages='Kannada'),
+Table altered
+
+8.)
+A:-ALTER TABLE Vehicle ADD(Owner_name CHAR(10));
+Table Aletered
+B:-ALTER TABLE Vehicle MODIFY(Owner_name CHAR(10) NOT NULL);
+Table Aletered
+C:-ALTER TABLE Vehicle ADD CONSTRAINT O_N CHECK(Owner_name<=8);
+Table Altered
+
+9.)
+ALTER TABLE Sales_Person DROP Owner_name;
+Table Aletered
+
+10.)
+ALTER TABLE Sales_Person RENAME(Owner_name TO Owner); 
+Table Aletered
+
+11.)
+RENAME SALES_PERSON TO S_P
+Table Aletered
+
+
+
+
+

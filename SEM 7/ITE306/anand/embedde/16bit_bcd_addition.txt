@@ -1,0 +1,12 @@
+//16 bit bcd addition
+mov dptr,#2060h
+mov a,#45h
+mov b,#32h
+addc a,dpl
+da a
+mov dpl,a
+mov a,b
+addc a,dph
+da a
+mov dph,a
+end

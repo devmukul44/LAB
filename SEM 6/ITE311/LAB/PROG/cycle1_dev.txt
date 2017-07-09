@@ -1,0 +1,419 @@
+---------------get by name-----------------------
+
+import java.io.*;
+import java.net.*;
+import java.util.*;
+class Pgm1
+{
+public static void main(String[] args)
+{
+	try{
+		
+InetAddress in1=InetAddress.getByName("www.vit.ac.in");
+System.out.println("Addr of vit.ac.in is : "+ in1);
+}
+catch(UnknownHostException e)
+{
+	System.out.println("catched exception");
+}
+}
+}
+
+
+----------------getAllByName----------------------
+
+import java.io.*;
+import java.net.*;
+import java.util.*;
+class Pgm2
+{
+public static void main(String[] args)
+{
+	try{
+		
+InetAddress[] in1=InetAddress.getAllByName("www.google.com.");
+for(int i=0;i<in1.length;i++)
+{
+System.out.println("Addr of microsoft is : "+ in1[i].getHostAddress());
+}
+
+}
+catch(UnknownHostException e)
+{
+	System.out.println("catched exception");
+}
+}
+}
+
+
+--------------getLocalHost()---------------
+import java.io.*;
+import java.net.*;
+import java.util.*;
+class Pgm3
+{
+public static void main(String[] args)
+{
+	try{
+		InetAddress in = InetAddress.getLocalHost();
+
+System.out.println("Local host is : "+ in.getHostAddress());
+
+
+}
+catch(UnknownHostException e)
+{
+	System.out.println("catched exception");
+}
+}
+}
+
+
+------------getHostName()------------------------
+import java.io.*;
+import java.net.*;
+import java.util.*;
+class Pgm4
+{
+public static void main(String[] args)
+{
+	try{
+		InetAddress in1=InetAddress.getByName("www.vit.ac.in");
+
+System.out.println("Local host is : "+ in1.getHostName());
+
+
+}
+catch(UnknownHostException e)
+{
+	System.out.println("catched exception");
+}
+}
+}
+
+
+-------------------loopback address---------------
+import java.net.*;
+import java.io.*;
+import java.util.*;
+class Pgm5{
+public static void main(String args[])throws Exception
+{
+try{
+Scanner sc=new Scanner(System.in);
+String s =sc.next();
+String s1[]=s.split("\\.");
+if(s1[0].equals("127"))
+{
+System.out.println("entered address is loopback");
+}
+else
+System.out.println("not a loopback address");
+}
+catch (Exception e)
+{
+System.out.println(e);
+}
+}
+}
+
+
+----------------isReachable(100000)----------------
+import java.io.*;
+import java.net.*;
+import java.util.*;
+class Pgm6
+{
+public static void main(String[] args)
+{
+	try{
+		
+		InetAddress in6=InetAddress.getByName("www.google.com");
+        boolean reach=in6.isReachable(100000000);
+        System.out.println("Host Reachable: "+reach);
+
+
+}
+catch(Exception e)
+{
+	System.out.println("catched exception");
+}
+}
+}
+
+
+----------------Inet4Address------------
+import java.io.*;
+import java.net.*;
+import java.util.*;
+
+class dev_pgm7
+{
+	public static void main(String args[]) throws Exception
+	{
+		System.out.println("enter ip address");
+		Scanner sc = new Scanner(System.in);
+		String ip = sc.next();
+		InetAddress address = InetAddress.getByName(ip);
+		if(isIPv4CompatibleAddress(address))
+		{
+			System.out.println("IPV4 address");
+		}
+		else
+		{
+			System.out.println("IPV6 address");
+		}
+
+	}
+}
+
+
+--------------------network interfaces------------
+import java.net.*;
+import java.util.*;
+
+public class Pgm8 {
+    public static void main(String[] args) throws Exception {
+      Enumeration interfaces = NetworkInterface.getNetworkInterfaces();
+      while (interfaces.hasMoreElements()) {
+        NetworkInterface ni = (NetworkInterface) interfaces.nextElement();
+        System.out.println(ni);               
+      }  
+          
+    }
+
+}
+
+
+---------------retrieve/open webpage---------------
+import java.io.*;
+import java.net.*;
+import java.awt.*;
+class Pgm9
+{
+public static void main(String args[])
+{
+try
+{
+Desktop d=java.awt.Desktop.getDesktop();
+URI u=new URI("https://academics.vit.ac.in/student/stud_login.asp");
+d.browse(u);
+}
+catch(Exception e)
+{
+e.printStackTrace();
+}
+}
+}
+
+
+--------------download webpage-----------
+import java.net.*;
+import java.io.*;
+import java.util.*;
+
+class dev_pgm10
+ {
+	 public static void main(String args[]) throws Exception
+	 {
+		URL u = new URL(args[0]);
+		InputStream in = u.openStream();
+		Scanner sc = new Scanner(new InputStreamReader(in));
+		String line;
+		while ((line = sc.nextLine()) != null) 
+		{
+		System.out.println(line);
+		}
+	 }
+ }
+
+
+-----------------URLEncoder.encode(url,"UTF-8")-------------
+import java.io.*;
+import java.net.*;
+class Pgm11a
+{
+public static void main(String []ar) throws Exception
+{
+  try {
+	String url = "http://www.vit.ac.in";
+	String encodedUrl = URLEncoder.encode(url,"UTF-8");
+	System.out.println("Encoded URL " + encodedUrl);
+	String decodedUrl = URLDecoder.decode(encodedUrl,"UTF-8");
+	System.out.println("Dncoded URL " + decodedUrl);
+	} catch (Exception e) {
+		System.err.println(e);
+
+	}
+}
+}
+
+
+
+-----------------------logo------------------
+import java.net.*;
+import java.io.*;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+
+class res
+{
+	public static void main(String args[]) throws Exception
+	{
+		//Socket s=new Socket("localhost",80);
+		URI u=new URI("https://academics.vit.ac.in/");
+		URI u1=new URI("/images/vit_logo6.jpg");
+		URI uu=u.resolve(u1);
+		URL ux=uu.toURL();
+		System.out.println(uu);
+		BufferedImage image = null;
+		image = ImageIO.read(ux);
+ImageIO.write(image, "jpg",new File("xyz.jpg"));
+System.out.println("Done");
+//System.out.println(s.getPort());
+		
+	}
+}
+
+
+-------------------------socks proxy-------------
+
+import java.net.*;
+
+class Thirteen
+{
+	public static void main(String[] args) throws Exception
+	{
+		SocketAddress s = new InetSocketAddress("proxy.example.com",80);
+		Proxy p = new Proxy(Proxy.Type.SOCKS,s);
+		System.out.println(p);
+	}
+}
+
+---------java program using threads to implement connection handling in a client server scenario------Multithreading------
+
+Server Thread
+import java.net.*;
+import java.io.*;
+
+class ServerThread extends Thread
+{
+	Socket c;
+
+	public ServerThread(Socket c)
+	{
+		this.c = c;
+	}
+
+	public void run()
+	{
+		try
+		{
+			DataOutputStream dos = new DataOutputStream(c.getOutputStream());
+			dos.writeBytes("Connected to server");
+			c.close();
+		}
+		catch(Exception e){}
+	}
+}
+
+Server-
+import java.net.*;
+
+class SeventeenServer
+{
+	public static void main(String[] args) throws Exception
+	{
+		ServerSocket s = new ServerSocket(9999);
+		while(true)
+		{
+			Socket c = s.accept();			
+			ServerThread st = new ServerThread(c);
+			st.start();
+		}
+	}
+}
+
+Client-
+import java.net.*;
+import java.io.*;
+
+class SeventeenClient
+{
+	public static void main(String[] args) throws Exception
+	{
+		Socket s = new Socket("localhost",9999);
+		BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream()));
+		DataOutputStream dos = new DataOutputStream(s.getOutputStream());
+		String p = "";
+		while((p=br.readLine())!=null)
+		{
+			System.out.println(p);
+		}
+	}
+}
+
+
+-----------------------1,024 ports seem to be hosting TCP servers on a specified host---------
+import java.net.*;
+import java.io.*;
+
+
+public class Pro1 {
+
+  public static void main(String[] args) {
+    
+    Socket theSocket;
+    String host = "localhost";
+
+    if (args.length > 0) {
+      host = args[0];
+    }
+    for (int i = 0; i < 1024; i++) {
+      try {
+        theSocket = new Socket(host, i);
+        System.out.println("There is a server on port " + i + " of " + host);
+      }
+      catch (UnknownHostException e) {
+        System.err.println(e);
+        break;
+      }
+      catch (IOException e) {
+        // must not be a server on this port
+      }
+    } // end for
+  
+  }  // end main
+  
+}  // end look for ports
+
+
+
+------------------Using java, retrieve sockets information-------------
+
+import java.io.IOException;
+import java.net.Socket;
+import java.net.SocketException;
+import java.net.UnknownHostException;
+
+public class Pro2 {
+
+  public static void main(String[] args) {
+
+    for (int i = 0; i < args.length; i++) {
+      try {
+        Socket theSocket = new Socket(args[i], 80);
+        System.out.println("Connected to " + theSocket.getInetAddress()
+            + " on port " + theSocket.getPort() + " from port "
+            + theSocket.getLocalPort() + " of " + theSocket.getLocalAddress());
+      } // end try
+      catch (UnknownHostException e) {
+        System.err.println("I can't find " + args[i]);
+      } catch (SocketException e) {
+        System.err.println("Could not connect to " + args[i]);
+      } catch (IOException e) {
+        System.err.println(e);
+      }
+    }
+  }
+}

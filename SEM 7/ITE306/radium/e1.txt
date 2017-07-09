@@ -1,0 +1,139 @@
+                                           DATE: 24/9/15
+                                      Name: SRI CHAKRA.POLURU
+                                             13BIT0228
+___________________________________________________________________________________________________________________________
+1. Write an ALP to transmit "H" continuously at a baud rate of 9600 with 8 bit data & 1 START bit & 1 STOP bit using Timer 1 in Mode 2
+=>
+MOV SCON,#050H
+MOV TH1,#0FDH
+MOV TMOD,#20H
+SETB TR1
+START: 	MOV SBUF,#"H"
+LOOP: 	JNB TI,LOOP
+	CLR TI
+	SJMP START
+END
+
+
+o/p:
+HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
+HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH.................................
+.......................................
+
+____________________________________________________________________________________________________________
+
+2. Write an ALP to transmit word "HELLO" continuously at a baud rate of 9600 with 8 bit data & 1 START bit & 1 STOP bit using Timer 1 in Mode 2
+=>
+MOV SCON,#050H
+MOV TH1,#0FAH
+MOV TMOD,#10H
+SETB TR1
+
+AGAIN: MOV A,#"H"
+ACALL TRANS
+MOV A,#"E"
+ACALL TRANS
+MOV A,#"L"
+ACALL TRANS
+MOV A,#"L"
+ACALL TRANS
+MOV A,#"O"
+ACALL TRANS
+SJMP AGAIN
+TRANS: MOV SBUF,A
+HERE: JNB TI,HERE
+CLR TI
+RET
+END
+
+o/p:
+HELLOHELLOHELLOHELLOHELLOHELLOHELLOHELLOHELLOHELLOHELLOHELLOHELLOHELLOHELLOHELLOHELLOHELLOHELLOHELLOHELLOHELLO
+HELLOHELLOHELLOHELLOHELLOHELLOHELLOHELLOHELLOHELLOHELLOHELLOHELLOHELLOHELLOHELLOHELLOHELLOHELLOHELLOHELLOHELLO
+..............................................................................................................
+
+3. Write an ALP to recieve at port 3 at a baud rate of 9600 with 8 bit data & 1 START bit & 1 STOP bit using Timer 1 in Mode 2
+=>
+MOV SCON,#050H
+MOV TH1,#0FAH
+MOV TMOD,#20H
+SETB TR1
+
+HERE: JNB RI, HERE
+MOV A,SBUF
+MOV P3,A
+CLR RI
+MOV SBUF,A
+SJMP HERE
+END
+______________________________________________________________________________________________________
+4. Write a C program to perform '&' operation of 2 bit numbers
+=>
+#include<stdio.h>
+#include<regx51.h>
+int input1;
+int input2;
+int result;
+void main()
+{
+     P0=0X02;
+     P1=0X04;
+     while(1)
+     {
+             input1=P0;
+             input2=P1;
+             result=input1&input2;
+             P2=result;
+             }
+             
+             }
+
+o/p: Port2: 0x00
+__________________________________________________________________________________________________________
+5. Write a C program to "&" P0_0 & P1_3 and send the result to P2_0
+=>
+#include<stdio.h>
+#include<regx51.h>
+int input1;
+int input2;
+int result;
+void main()
+{
+     P0_0=0X02;
+     P1_3=0X04;
+     while(1)
+     {
+             input1=P0_0;
+             input2=P1_3;
+             result=input1&input2;
+             P2_0=result;
+             }
+             
+             }
+I/P:
+P0_0=02
+P1_3=02
+
+O/P:
+P2_0=1
+__________________________________________________________________________________________________________
+6. Write a C program to read P1 and send data to P2 or P3 based on a condition
+=>
+#include<stdio.h>
+#include<regx51.h>
+void main()
+{
+P2=0X04;
+if(P2%2==0)
+{
+P2=P1;
+}
+else
+{
+P2=P3;
+}
+}
+
+O/P:
+P2=P1
+_________________________________________________________________________________________________________
+___________________________________________________________________________________________________________	

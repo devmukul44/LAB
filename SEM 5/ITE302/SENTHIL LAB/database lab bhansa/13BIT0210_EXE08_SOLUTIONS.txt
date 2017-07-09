@@ -1,0 +1,131 @@
+
+1. To print odd numbers below a given number n.
+sql>
+declare
+a number:=1;
+b number; 	
+begin
+b := &b;
+while a<=b loop
+dbms_output.put_line(a);
+a := a+2;
+end loop;
+end;
+/
+
+2. To find the factorial of a given number
+
+declare
+a number;
+fact number:=1;
+begin 
+a:=5;
+while a>1 loop
+fact:=fact*a;
+a:=a-1;
+end loop;
+dbms_output.put_line(fact);
+end;
+/
+
+3. To calculate a percentage of an account’s balance and update that account with new calculated balance. [use table account(acno, balance, branch, account_type)]
+
+create table account(
+acno char(4) primary key,
+balance number(5),
+branch varchar(10),
+acc_type varchar(10)
+);
+	
+insert into account values(
+'ac01', 533, 'sbi', 'saving');
+insert into account values(
+'ac02', 520, 'hdfc', 'saving');
+insert into account values(
+'ac03', 984, 'icici', 'current');
+insert into account values(
+'ac04', 290, 'idbi', 'saving');
+
+declare
+   b account.balance%type;
+   n number;
+   begin
+   select balance into b from account;
+   update account set balance=b+(b*.13);
+
+   end;
+/
+ where acno=ac01
+
+
+4. To find factorial of a given number using functions.
+
+create or replace function fact(num number) return number is
+f number;
+begin
+f:=1;
+for i in 1.. num
+loop
+f:=f*i;
+end loop;
+return f;
+end;
+/
+
+declare
+a number;
+begin 
+a:=fact(&n);
+dbms_output.put_line(a);
+end;
+/
+
+
+5. To find the reverse of a given number using procedures.
+
+create or replace procedure reverse(num number) is
+n number:=num;
+nk number:=num;
+buf number;
+rev number:=0;
+r number:=1;
+begin
+while n>1 
+loop
+n := n/10;
+r := r*10;
+end loop;
+r := r/10;
+n := num;
+while n>=1 
+loop
+buf := mod(n, 10);
+rev := rev + (buf*r);
+r := r/10;
+nk := (mod(n, 10))/10;
+n := n/10;
+n := n-nk;
+end loop;
+dbms_output.put_line(rev);
+end;
+/
+
+create or replace procedure reverse(num number) is
+n number:=num;
+nk number:=num;
+buf number;
+rev number:=0;
+r number:=10000;
+begin
+while n>=1
+loop
+buf := mod(n, 10);
+rev := rev + (buf*r);
+r := r/10;
+nk := (mod(n, 10))/10;
+n := n/10;
+n := n-nk;
+end loop;
+dbms_output.put_line(rev);
+end;
+/

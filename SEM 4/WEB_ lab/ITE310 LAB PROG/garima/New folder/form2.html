@@ -1,0 +1,119 @@
+<html>
+<head>
+<title>form 2
+</title>
+<style>
+#header {
+    background-color:#eeeeee:;
+    color:white;
+    text-align:center;
+    padding:5px;
+}
+#nav {
+    line-height:30px;
+    background-color:#eeeeee;
+    height:1000px;
+    width:200px;
+    float:left;
+    padding:7px; 
+}
+#section {
+    width:350px;
+    float:left;
+    padding:10px; 
+}
+#footer {
+    background-color:black;
+    color:white;
+    clear:both;
+    text-align:center;
+    padding:5px; 
+}
+</style>
+<script>
+function validate()
+{
+   if( document.f1.tid.value == "" )
+   {
+     alert( "Please provide tender ID!" );
+     document.f1.tid.focus() ;
+	 
+     return false;
+   }
+   if( document.f1.td.value == "" )
+   {
+     alert( "Please provide tender description!" );
+     document.f1.td.focus() ;
+	 
+     return false;
+   }
+   if( document.f1.mot.value == "-1" )
+   {
+     alert( "Please provide mode of tender!" );
+     document.f1.mot.focus() ;
+	 
+     return false;
+   }
+   if( document.f1.pdate.value == "" )
+   {
+     alert( "Please publication date!" );
+     document.f1.pdate.focus() ;
+	 
+     return false;
+   }
+   if( document.f1.bt.value == "-1" )
+   {
+     alert( "Please select bidding type!" );
+     document.f1.bt.focus() ;
+	 
+     return false;
+   }
+}
+</script>
+</head>
+<body>
+<div id="header">	
+<img src="nhpc.jpg" height="100px" width="800px">
+</div>
+<div id="nav">
+<a href="form1.html">
+Contractor Master
+</a><br>
+<a href="form2.html">
+Tender Master
+</a><br>
+</div>
+<div id="section">
+<form name="f1" onsubmit="return (validate())" action="tender.php" method="post">
+Tender Id:<input type="text" name="tid"> <br>
+Tender Description:<input type="text" name="td"><br>
+<br>
+Mode of Tender:
+<select name="mot">
+  <option value="-1">--select--</option>
+  <option value="open">Open</option>
+  <option value="limit">Limit</option>
+  <option value="eoi">EOI</option>
+  <option value="auction">Auction</option>
+  <option value="single">Single</option>
+  <option value="testing">Testing</option>
+</select><br><br>
+Publication date: <input type="date" name="pdate">
+<br>Last date:
+<br><br>
+Bidding type:
+<select name="bt">
+  <option value="-1">--select--</option>
+  <option value="one bidding system">One Bidding System</option>
+  <option value="two bidding system">Two Bidding System</option>
+</select><br>
+<br>
+<br>
+&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp 
+<input type="submit" name="Submit" value="Save">
+</form>
+</body>
+</html>
+  
+
+

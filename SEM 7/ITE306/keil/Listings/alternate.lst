@@ -1,0 +1,43 @@
+C51 COMPILER V9.56.0.0   ALTERNATE                                                         11/10/2016 01:42:45 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE ALTERNATE
+OBJECT MODULE PLACED IN .\Objects\alternate.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE alternate.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings
+                    -\alternate.lst) TABS(2) OBJECT(.\Objects\alternate.obj)
+
+line level    source
+
+   1          #include<stdio.h>
+   2          #include<regx51.h>
+   3          void delay(const unsigned int x)
+   4          {
+   5   1        unsigned int i,j;
+   6   1        for(i=0;i<x;i++)
+   7   1        for(j=0;j<1275;j++){}
+   8   1      }
+   9          
+  10          int main()
+  11          {
+  12   1        while(1)
+  13   1        {
+  14   2          P0=0xaa;
+  15   2          delay(600);
+  16   2          P0=0x55;
+  17   2          delay(600); 
+  18   2        }
+  19   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     50    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

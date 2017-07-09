@@ -1,0 +1,129 @@
+13BIT0210
+RAMANUJ SHARMA
+12/2/16
+
+
+EXERCISE - 4
+                    
+PART A
+Alter table exercise; you need to alter the tables that you have created as part of Exercise 3 as per the instructions / requirements given below; you need to use the following statements;
+
+ALTER TABLE/CONSTRAINT:
+
+ALTER TABLE table_name ADD (columns definition separated by comma as in CREATE TABLE statements);
+ALTER TABLE table_name MODIFY (names of all the columns whose type or size has to be changed, should be separated by comma);
+ALTER TABLE table_name DROP COLUMN column_name;
+
+ALTER TABLE table_name ADD CONSTRAINT constraint_name constraint_definition;
+ALTER TABLE table_name DROP CONSTRAINT constraint_name;
+ALTER TABLE table_name RENAME COLUMN old TO new;
+
+	Eg. ALTER TABLE stu ADD (phone NUMBER(10));
+
+
+CREATE TABLE Actor(
+Act_no CHAR(5),
+Act_name VARCHAR(10),
+Gender CHAR(1),
+Roles VARCHAR(15),
+Movies_no NUMBER(4),
+Movies_lang VARCHAR(10),
+CONSTRAINT CHK PRIMARY KEY(Act_no),
+CONSTRAINT ACHK CHECK(Act_no like ('A____')),
+CONSTRAINT MLCHK CHECK(Movies_lang IN('Tamil', 'Hindi', 'Telgu', 'Malayalam', 'English')),
+CONSTRAINT MCHK CHECK(Movies_no < 1500),
+CONSTRAINT MECHK CHECK(Movies_no IS NOT NULL),
+CONSTRAINT RCHK CHECK(Roles IN('Hero','Heroine','Specialappearance','Cameo', 'Guest role', 'Supporting')),
+CONSTRAINT GCHK CHECK(Gender IN('M', 'F')),
+CONSTRAINT GECHK CHECK(Gender IS NOT NULL));
+
+Write appropriate SQL statements to achieve the following;
+
+1. Remove the constraint on SID of sales_person table and then add the same. Observe the difference with records and without records stored in sales_person.
+
+CODE;
+ALTER TABLE Actor DROP CONSTRAINT ACHK;
+
+INSERT INTO Actor VALUES(
+'T3455', 'Siddhartha', 'M', 'Hero', '15', 'Tamil');
+
+ALTER TABLE Actor ADD CONSTRAINT ACHK CHECK (Act_no like 'A____');
+
+
+2.Increase the size of the column person_name of sales_person table.
+CODE;
+ALTER TABLE Actor MODIFY (Act_name VARCHAR(13));
+
+INSERT INTO Actor VALUES(
+'T3455', 'Siddhartha Vijay', 'M', 'Hero', '15', 'Tamil');
+
+
+3. Decrease the size of person_name of sales_person table and observe the results carefully with and without records stored.
+CODE;
+ALTER TABLE Actor MODIFY (Act_name VARCHAR(10));
+
+ORA-01441: cannot decrease column length because some value is too big.
+
+
+4. Remove the not null constraint on established_year of university table using constraint name. 
+CODE;
+ALTER TABLE Actor DROP CONSTRAINT MECHK;
+
+INSERT INTO Actor VALUES(
+'A3459', 'Siddhartha', 'M', 'Hero', NULL, 'Tamil');
+
+
+5. Remove the not null constraint on gender of Actor table without using constraint names.
+CODE; 
+ALTER TABLE Actor DROP COLUMN Gender;
+
+INSERT INTO Actor VALUES(
+'A3450', 'Siddhartha', 'Hero', NULL, 'Tamil');
+
+ALTER TABLE Actor ADD(Gender CHAR(1));
+
+INSERT INTO Actor VALUES(
+'A3458', 'Shekhar', 'Hero', NULL, 'Hindi', ' ');
+
+
+6. Add one more role ‘Villain’ to the constraint of roles_played of Actor table. [Note: drop constraints and add new one]
+CODE;
+ALTER TABLE Actor DROP CONSTRAINT RCHK;
+
+ALTER TABLE Actor ADD CONSTRAINT RCHK CHECK(Roles IN('Hero','Heroine','Specialappearance','Cameo', 'Guest role', 'Supporting', 'Villain'));
+
+INSERT INTO Actor VALUES(
+'A3148', 'Shahi', 'Villain', 90, 'Hindi', 'M');
+
+
+7. Add one more language ‘Kannada’ with movie_languages of Actor table.
+CODE;
+ALTER TABLE Actor DROP CONSTRAINT MLCHK;
+
+ALTER TABLE Actor ADD CONSTRAINT MLCHK CHECK(Movies_lang IN('Tamil', 'Hindi', 'Telgu', 'Malayalam', 'English', 'Kannada'));
+
+INSERT INTO Actor VALUES(
+'A3248', 'Kamal', 'Villain', 70, 'Kannada', 'M');
+
+
+8. Add a new column owner_name with Vehicle table. Observe this addition with following constraints;
+a. owner_name without any constraints.
+b. owner_name with not null constraint.
+c. owner_name with check constraint like the owner_name can be of 8 characters long only.
+CODE;
+ALTER TABLE Actor ADD(Act_exp NUMBER(5));
+
+INSERT INTO Actor VALUES(
+'A3648', 'Kamal', 'Villain', 70, 'Kannada', 'M', NULL);
+
+ALTER TABLE Actor ADD CONSTRAINT ECHK CHECK(Act_exp is NOTNULL);
+
+ORA-02293: cannot validate (SAINT.ECHK) - check constraint violated
+
+ALTER 
+
+
+
+
+
+

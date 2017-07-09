@@ -1,0 +1,5 @@
+//complement of a
+MOV A,#08H
+CPL A
+INC A
+END

@@ -1,0 +1,354 @@
+
+Name-Siddhartha Rastogi
+Reg No-13bit0040
+EX_5
+
+
+
+
+SQL> create table customer(cid varchar(5),cname varchar(20) not null,address var
+char(20) not null,phone number,primary key(cid));
+
+Table created.
+
+SQL> create table account(acno varchar(20),acttype varchar(20) not null,balance
+number,branch varchar(20),primary key(acno));
+
+Table created.
+
+SQL> create table branch(bno varchar(10),bname varchar(20) not null,address varc
+har(20),phone number);
+
+Table created.
+
+SQL> create table depositer(cid varchar(10),acno varchar(20),foreign key(cid) re
+ferences customer,foreign key(acno) references account);
+
+Table created.
+
+SQL> create table items(itemid varchar(10),itemname varchar(20) not null,price n
+umber,primary key(itemid));
+
+Table created.
+
+SQL> create table store(storeid varchar(10),storename varchar(20) notnull,addres
+s varchar(20),phone number,primary key(storeid));
+create table store(storeid varchar(10),storename varchar(20) notnull,address var
+char(20),phone number,primary key(storeid))
+                                                             *
+ERROR at line 1:
+ORA-00907: missing right parenthesis
+
+
+SQL> alter table account add constraint fk1 foreign key(branch) references branc
+h(bno);
+alter table account add constraint fk1 foreign key(branch) references branch(bno
+)
+                                                                             *
+ERROR at line 1:
+ORA-02270: no matching unique or primary key for this column-list
+
+
+SQL> drop table branch
+  2  ;
+
+Table dropped.
+
+SQL>
+SQL> create table branch(bno varchar(10) primary key,bname varchar(20) not null,
+address varchar(20),phone number);
+
+Table created.
+
+SQL> alter table account add constraint fk1 foreign key(branch) references branc
+h(bno);
+
+Table altered.
+
+SQL> create table store(storeid varchar(10),storename varchar(20) notnull,addres
+s varchar(20),phone number,primary key(storeid));
+create table store(storeid varchar(10),storename varchar(20) notnull,address var
+char(20),phone number,primary key(storeid))
+                                                             *
+ERROR at line 1:
+ORA-00907: missing right parenthesis
+
+
+SQL> create table store(storeid varchar(10),storename varchar(20) not null,addre
+ss varchar(20),phone number,primary key(storeid));
+
+Table created.
+
+SQL> create table sales_item(itemid varchar(10),storeid varchar(10),qty number,f
+oreign key(itemid) references items,foreign key(storeid) references store);
+
+Table created.
+
+
+
+
+
+SQL> insert into customer values('&a','&b','&c','&d');
+Enter value for a: 12345
+Enter value for b: divyanshu
+Enter value for c: vellore
+Enter value for d: 6565493472
+old   1: insert into customer values('&a','&b','&c','&d')
+new   1: insert into customer values('12345','divyanshu','vellore','6565493472
+
+
+1 row created.
+
+SQL> /
+Enter value for a: 13423
+Enter value for b: ratnesh
+Enter value for c: chennai
+Enter value for d: 6567483546
+old   1: insert into customer values('&a','&b','&c','&d')
+new   1: insert into customer values('13423','ratnesh','chennai','6567483546')
+
+1 row created.
+
+SQL> /
+Enter value for a: ashish
+Enter value for b:
+Enter value for c:
+Enter value for d:
+old   1: insert into customer values('&a','&b','&c','&d')
+new   1: insert into customer values('ashish','','','')
+insert into customer values('ashish','','','')
+                            *
+ERROR at line 1:
+ORA-12899: value too large for column "13BIT0043"."CUSTOMER"."CID" (actual: 6,
+maximum: 5)
+
+
+SQL> /
+Enter value for a: 15432
+Enter value for b: ashish
+Enter value for c: lucknow
+Enter value for d: 5467865767
+old   1: insert into customer values('&a','&b','&c','&d')
+new   1: insert into customer values('15432','ashish','lucknow','5467865767')
+
+1 row created.
+
+
+
+
+SQL> insert into branch values('&e','&f','&g','&h');
+Enter value for e: s123
+Enter value for f: katpadi
+Enter value for g: vit
+Enter value for h: 2345654
+old   1: insert into branch values('&e','&f','&g','&h')
+new   1: insert into branch values('s123','katpadi','vit','2345654')
+
+1 row created.
+
+SQL> /
+Enter value for e: s234
+Enter value for f: katpadi1
+Enter value for g: vit1
+Enter value for h: 67678328589
+old   1: insert into branch values('&e','&f','&g','&h')
+new   1: insert into branch values('s234','katpadi1','vit1','67678328589')
+
+1 row created.
+
+SQL> /
+Enter value for e: s432
+Enter value for f: katpadi2
+Enter value for g: vit2
+Enter value for h: 7623572578
+old   1: insert into branch values('&e','&f','&g','&h')
+new   1: insert into branch values('s432','katpadi2','vit2','7623572578')
+
+1 row created.
+
+SQL> insert into account values('&e','&f','&g','&h');
+Enter value for e: 352651276
+Enter value for f: sb
+Enter value for g: 45576
+Enter value for h: vit
+old   1: insert into account values('&e','&f','&g','&h')
+new   1: insert into account values('352651276','sb','45576','vit')
+insert into account values('352651276','sb','45576','vit')
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (13BIT0043.FK1) violated - parent key not foun
+
+
+SQL> /
+Enter value for e: 564365243
+Enter value for f: sb
+Enter value for g: 3436
+Enter value for h: s432
+old   1: insert into account values('&e','&f','&g','&h')
+new   1: insert into account values('564365243','sb','3436','s432')
+
+1 row created.
+
+SQL> /
+Enter value for e: 762364785
+Enter value for f: cr
+Enter value for g: 43566564
+Enter value for h: s235
+old   1: insert into account values('&e','&f','&g','&h')
+new   1: insert into account values('762364785','cr','43566564','s235')
+insert into account values('762364785','cr','43566564','s235')
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (13BIT0043.FK1) violated - parent key not foun
+
+
+SQL> /
+Enter value for e: 5432362347
+Enter value for f: cr
+Enter value for g: 62578236
+Enter value for h: s123
+old   1: insert into account values('&e','&f','&g','&h')
+new   1: insert into account values('5432362347','cr','62578236','s123')
+
+1 row created.
+
+SQL> /
+Enter value for e: 762562347
+Enter value for f: joint
+Enter value for g: 765734
+Enter value for h: s234
+old   1: insert into account values('&e','&f','&g','&h')
+new   1: insert into account values('762562347','joint','765734','s234')
+
+1 row created.
+
+SQL> select cid from customer;
+
+CID
+-----
+12345
+13423
+15432
+
+SQL> insert into depositer values('&a','&b');
+Enter value for a: 12345
+Enter value for b: s123
+old   1: insert into depositer values('&a','&b')
+new   1: insert into depositer values('12345','s123')
+insert into depositer values('12345','s123')
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (13BIT0043.SYS_C00207616) violated - parent ke
+not found
+
+
+SQL> /
+Enter value for a:
+Enter value for b:
+old   1: insert into depositer values('&a','&b')
+new   1: insert into depositer values('','')
+
+1 row created.
+
+SQL>
+SQL> select acno from account
+  2  ;
+
+ACNO
+--------------------
+5432362347
+564365243
+762562347
+
+SQL> insert into depositer values('&a','&b');
+Enter value for a: 12345
+Enter value for b: 5432362347
+old   1: insert into depositer values('&a','&b')
+new   1: insert into depositer values('12345','5432362347')
+
+1 row created.
+
+SQL> /
+Enter value for a: 13423
+Enter value for b: 564365243
+old   1: insert into depositer values('&a','&b')
+new   1: insert into depositer values('13423','564365243')
+
+1 row created.
+
+SQL> /
+Enter value for a: 15432
+Enter value for b: 762562347
+old   1: insert into depositer values('&a','&b')
+new   1: insert into depositer values('15432','762562347')
+
+1 row created.
+
+SQL> select sum(balance) from account;
+
+SUM(BALANCE)
+------------
+    63347406
+
+SQL> select avg(balance) from account;
+
+AVG(BALANCE)
+------------
+    21115802
+
+
+SQL> select sum(balance) from branch where bname like 'katpadi';
+select sum(balance) from branch where bname like 'katpadi'
+           *
+ERROR at line 1:
+ORA-00904: "BALANCE": invalid identifier
+
+
+SQL> select sum(balance) from account where bname like 'katpadi';
+select sum(balance) from account where bname like 'katpadi'
+                                       *
+ERROR at line 1:
+ORA-00904: "BNAME": invalid identifier
+
+
+SQL> select sum(balance) from account where branch='s234';
+
+SUM(BALANCE)
+------------
+      765734
+
+SQL> select sum(balance) from account where branch='s234' and branch='s123';
+
+SUM(BALANCE)
+------------
+
+
+SQL> select sum(balance) from account where branch='s234' and branch='s432';
+
+SUM(BALANCE)
+------------
+
+
+SQL> select sum(balance) from account where( branch='s234' and branch= 's432');
+
+SUM(BALANCE)
+------------
+
+
+SQL> select sum(balance) from account where branch='s432';
+
+SUM(BALANCE)
+------------
+        3436
+
+SQL> select sum(balance) from account where branch='s432' or branch='s123';
+
+SUM(BALANCE)
+------------
+    62581672
+
+SQL> select sum(balance) from account where branch='s432' ;
+
+SUM(BALANCE)
+------------
+        3436

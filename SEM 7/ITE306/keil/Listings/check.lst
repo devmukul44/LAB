@@ -1,0 +1,54 @@
+A51 MACRO ASSEMBLER  CHECK                                                                10/31/2016 23:00:10 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.5.0
+OBJECT MODULE PLACED IN .\Objects\check.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE check.asm SET(SMALL) DEBUG PRINT(.\Listings\check.lst) OBJECT(.\Objects
+                      \check.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000 901000            1     MOV DPTR,#1000H
+
+0003 780A              2     MOV R0,#0AH
+
+0005 75F09F            3     MOV B,#9FH
+
+0008                   4     LOOP:
+
+0008 E0                5          MOVX A,@DPTR
+
+0009 B5F000            6              CJNE A,B,LB
+
+000C                   7              LB:
+
+000C 5002              8              JNC LBA
+
+000E F5F0              9              MOV B,A
+
+0010                  10     LBA:
+
+0010 A3               11          INC DPTR
+
+0011 D8F5             12              DJNZ R0,LOOP
+
+                      13              END
+
+A51 MACRO ASSEMBLER  CHECK                                                                10/31/2016 23:00:10 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+B. . . . . . . . .  D ADDR   00F0H   A   
+LB . . . . . . . .  C ADDR   000CH   A   
+LBA. . . . . . . .  C ADDR   0010H   A   
+LOOP . . . . . . .  C ADDR   0008H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)
